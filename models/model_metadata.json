@@ -1,0 +1,190 @@
+{
+  "target": "resolution_breached (1 = SLA breached, 0 = resolved within target)",
+  "selected_model": "random_forest",
+  "is_calibrated": true,
+  "train_samples": 1445,
+  "test_samples": 362,
+  "random_state": 42,
+  "feature_columns_in": [
+    "priority_rank",
+    "sla_target_hours",
+    "is_reopen_child",
+    "is_incident_ticket",
+    "intake_hour",
+    "intake_day_of_week",
+    "intake_is_weekend",
+    "intake_month",
+    "intake_hour_sin",
+    "intake_hour_cos",
+    "intake_dow_sin",
+    "intake_dow_cos",
+    "category",
+    "sub_category",
+    "priority",
+    "merchant_tier",
+    "merchant_sector",
+    "merchant_region"
+  ],
+  "cv_benchmarks": {
+    "majority_baseline": {
+      "cv_roc_auc_mean": 0.5,
+      "cv_roc_auc_std": 0.0,
+      "cv_pr_auc_mean": 0.5737024221453287,
+      "cv_pr_auc_std": 0.0013840830449827202,
+      "cv_f1_mean": 0.7291107130754708,
+      "cv_f1_std": 0.001119233189717761,
+      "cv_precision_mean": 0.5737024221453287,
+      "cv_recall_mean": 1.0
+    },
+    "logistic_regression": {
+      "cv_roc_auc_mean": 0.8322375303373567,
+      "cv_roc_auc_std": 0.010218913005572382,
+      "cv_pr_auc_mean": 0.8662704211640471,
+      "cv_pr_auc_std": 0.011469943497264122,
+      "cv_f1_mean": 0.7748757473576182,
+      "cv_f1_std": 0.013870681213895888,
+      "cv_precision_mean": 0.7913954297838597,
+      "cv_recall_mean": 0.7599488864549105
+    },
+    "random_forest": {
+      "cv_roc_auc_mean": 0.8370014138522477,
+      "cv_roc_auc_std": 0.011890665517564729,
+      "cv_pr_auc_mean": 0.8654117585279753,
+      "cv_pr_auc_std": 0.009436008921109745,
+      "cv_f1_mean": 0.7866534158383628,
+      "cv_f1_std": 0.02287355857304004,
+      "cv_precision_mean": 0.8127202841379841,
+      "cv_recall_mean": 0.7635414384811975
+    }
+  },
+  "holdout_results": {
+    "majority_baseline": {
+      "roc_auc": 0.5,
+      "pr_auc": 0.574585635359116,
+      "f1": 0.7298245614035088,
+      "precision": 0.574585635359116,
+      "recall": 1.0,
+      "brier_score": 0.425414364640884,
+      "confusion_matrix": {
+        "tn": 0,
+        "fp": 154,
+        "fn": 0,
+        "tp": 208
+      }
+    },
+    "logistic_regression": {
+      "roc_auc": 0.8804320679320679,
+      "pr_auc": 0.9151326104725785,
+      "f1": 0.8241206030150754,
+      "precision": 0.8631578947368421,
+      "recall": 0.7884615384615384,
+      "brier_score": 0.143609263544233,
+      "confusion_matrix": {
+        "tn": 128,
+        "fp": 26,
+        "fn": 44,
+        "tp": 164
+      }
+    },
+    "random_forest": {
+      "roc_auc": 0.8821491008991009,
+      "pr_auc": 0.9198352645204938,
+      "f1": 0.8226221079691517,
+      "precision": 0.8839779005524862,
+      "recall": 0.7692307692307693,
+      "brier_score": 0.15296713153916972,
+      "confusion_matrix": {
+        "tn": 133,
+        "fp": 21,
+        "fn": 48,
+        "tp": 160
+      }
+    },
+    "calibrated_selected_model": {
+      "model_name": "Calibrated Random Forest (Sigmoid cv=5)",
+      "roc_auc": 0.8839910089910089,
+      "pr_auc": 0.9200064962612691,
+      "f1": 0.836027713625866,
+      "precision": 0.8044444444444444,
+      "recall": 0.8701923076923077,
+      "brier_score": 0.1389725861167413,
+      "confusion_matrix": {
+        "tn": 110,
+        "fp": 44,
+        "fn": 27,
+        "tp": 181
+      }
+    }
+  },
+  "top_feature_importances": [
+    {
+      "feature": "cat__category_Payments & Checkout",
+      "importance": 0.17726480665952024
+    },
+    {
+      "feature": "cat__category_Notifications",
+      "importance": 0.16296094984976756
+    },
+    {
+      "feature": "cat__category_Account Access",
+      "importance": 0.11498740763639279
+    },
+    {
+      "feature": "cat__category_API Integrations",
+      "importance": 0.0568838751005359
+    },
+    {
+      "feature": "num__sla_target_hours",
+      "importance": 0.04751490177309931
+    },
+    {
+      "feature": "num__priority_rank",
+      "importance": 0.031850261153796314
+    },
+    {
+      "feature": "cat__sub_category_Template Syntax Error",
+      "importance": 0.030914229158735342
+    },
+    {
+      "feature": "cat__sub_category_Payout Delays",
+      "importance": 0.027088333647271548
+    },
+    {
+      "feature": "cat__sub_category_Webhook Retries",
+      "importance": 0.02393843619079895
+    },
+    {
+      "feature": "cat__sub_category_Password Reset",
+      "importance": 0.020324800909081335
+    },
+    {
+      "feature": "cat__priority_P2",
+      "importance": 0.01957948911242059
+    },
+    {
+      "feature": "num__intake_hour",
+      "importance": 0.01611489133490737
+    },
+    {
+      "feature": "num__intake_month",
+      "importance": 0.016075066389022067
+    },
+    {
+      "feature": "cat__sub_category_Email Delivery Failure",
+      "importance": 0.01588412294426983
+    },
+    {
+      "feature": "num__intake_hour_cos",
+      "importance": 0.01546647735162912
+    }
+  ],
+  "class_distribution": {
+    "train_positive_rate": 0.5737024221453287,
+    "test_positive_rate": 0.574585635359116
+  },
+  "limitations": [
+    "Intake-time only features: cannot observe agent skill or queue congestion at prediction time.",
+    "Synthetic ITSM distribution: priority and category have deterministic SLA thresholds shaping the breach boundary.",
+    "Stratified split preserves class balance across priorities, but does not simulate non-stationary regime shifts over time."
+  ]
+}
