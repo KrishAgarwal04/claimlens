@@ -1,0 +1,501 @@
+ticket_id,priority,priority_rank,sla_target_hours,category,sub_category,intake_hour_sin,intake_hour_cos,intake_dow_sin,intake_dow_cos,intake_is_weekend,intake_month,is_reopen_child,is_incident_ticket,merchant_tier,merchant_sector,merchant_region,actual_sla_breach
+EXTTEST-00001,P2,2,8.0,Account Access,Login Failure,0.0,1.0,-0.781831,0.62349,1,10,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00002,P1,1,2.0,Account Access,Login Failure,0.5,0.866025,-0.781831,0.62349,1,6,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00003,P2,2,8.0,API Integrations,Webhook Failures,-0.965926,-0.258819,-0.433884,-0.900969,0,11,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00004,P2,2,8.0,Account Access,Password Reset,0.0,1.0,0.974928,-0.222521,0,3,0,0,Advanced,Fashion,North America,0
+EXTTEST-00005,P2,2,8.0,Payments & Checkout,Refund Processing,-0.866025,-0.5,0.0,1.0,0,4,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00006,P3,3,24.0,API Integrations,Endpoint Timeout,0.866025,-0.5,0.433884,-0.900969,0,10,0,0,Advanced,Grocery,North America,1
+EXTTEST-00007,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.866025,0.5,0.0,1.0,0,10,0,0,Advanced,Pharmaceuticals,UK & Europe,1
+EXTTEST-00008,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.707107,-0.707107,0.974928,-0.222521,0,2,0,1,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00009,P2,2,8.0,API Integrations,Authentication Error,0.258819,-0.965926,-0.433884,-0.900969,0,9,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00010,P3,3,24.0,API Integrations,Endpoint Timeout,1.0,0.0,0.974928,-0.222521,0,10,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00011,P4,4,48.0,Fulfilment & Logistics,Label Generation,0.258819,0.965926,0.433884,-0.900969,0,10,0,0,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00012,P1,1,2.0,Payments & Checkout,3DS Authentication,-0.5,0.866025,0.781831,0.62349,0,2,1,0,Advanced,Electronics,North America,1
+EXTTEST-00013,P3,3,24.0,Notifications,SMS Delay,-0.707107,0.707107,0.433884,-0.900969,0,6,0,1,Advanced,Grocery,UK & Europe,1
+EXTTEST-00014,P3,3,24.0,API Integrations,Rate Limiting,-0.866025,-0.5,0.433884,-0.900969,0,9,0,0,Foundation,Home & Garden,Asia-Pacific,0
+EXTTEST-00015,P4,4,48.0,Payments & Checkout,Refund Processing,-0.965926,0.258819,0.0,1.0,0,10,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00016,P3,3,24.0,Notifications,Template Error,-1.0,-0.0,-0.781831,0.62349,1,1,0,0,Foundation,Electronics,North America,1
+EXTTEST-00017,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.707107,-0.707107,-0.433884,-0.900969,0,4,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00018,P4,4,48.0,Payments & Checkout,Refund Processing,1.0,0.0,-0.433884,-0.900969,0,5,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00019,P2,2,8.0,Account Access,Account Lockout,-0.707107,-0.707107,0.974928,-0.222521,0,8,0,0,Advanced,Sporting Goods,UK & Europe,1
+EXTTEST-00020,P2,2,8.0,Notifications,SMS Delay,-0.258819,-0.965926,0.433884,-0.900969,0,1,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00021,P1,1,2.0,Fulfilment & Logistics,Order Status Error,-0.866025,0.5,0.0,1.0,0,10,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00022,P4,4,48.0,Payments & Checkout,Payout Delays,1.0,0.0,-0.433884,-0.900969,0,4,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00023,P4,4,48.0,API Integrations,Rate Limiting,0.5,0.866025,0.433884,-0.900969,0,1,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00024,P3,3,24.0,Payments & Checkout,Payout Delays,1.0,0.0,0.0,1.0,0,12,0,1,Foundation,Fashion,North America,1
+EXTTEST-00025,P3,3,24.0,Notifications,Push Delivery Failure,0.0,1.0,0.0,1.0,0,12,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00026,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.0,-1.0,0.433884,-0.900969,0,7,0,1,Advanced,Home & Garden,North America,1
+EXTTEST-00027,P2,2,8.0,API Integrations,Rate Limiting,-0.5,0.866025,-0.433884,-0.900969,0,8,1,0,Advanced,Grocery,North America,1
+EXTTEST-00028,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.707107,0.707107,0.974928,-0.222521,0,2,0,1,Foundation,Fashion,UK & Europe,1
+EXTTEST-00029,P3,3,24.0,Fulfilment & Logistics,Label Generation,0.965926,-0.258819,0.433884,-0.900969,0,1,0,0,Advanced,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00030,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.965926,0.258819,0.433884,-0.900969,0,8,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00031,P1,1,2.0,Payments & Checkout,Card Declines,0.866025,0.5,-0.781831,0.62349,1,8,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00032,P2,2,8.0,Fulfilment & Logistics,Order Status Error,0.5,-0.866025,-0.781831,0.62349,1,10,1,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00033,P3,3,24.0,API Integrations,Rate Limiting,-0.5,0.866025,0.974928,-0.222521,0,4,0,0,Advanced,Grocery,North America,0
+EXTTEST-00034,P2,2,8.0,Payments & Checkout,Card Declines,0.258819,-0.965926,0.0,1.0,0,12,1,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00035,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.707107,0.707107,0.0,1.0,0,1,0,0,Foundation,Electronics,Asia-Pacific,1
+EXTTEST-00036,P3,3,24.0,Payments & Checkout,Payout Delays,-0.965926,0.258819,0.0,1.0,0,11,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00037,P1,1,2.0,Payments & Checkout,Payout Delays,-0.258819,-0.965926,0.433884,-0.900969,0,7,0,0,Foundation,Fashion,North America,1
+EXTTEST-00038,P1,1,2.0,Notifications,Push Delivery Failure,0.866025,0.5,0.781831,0.62349,0,12,0,0,Advanced,Grocery,Asia-Pacific,1
+EXTTEST-00039,P2,2,8.0,Payments & Checkout,3DS Authentication,-0.5,0.866025,-0.974928,-0.222521,1,5,0,0,Advanced,Grocery,North America,1
+EXTTEST-00040,P3,3,24.0,Account Access,MFA Issue,-1.0,-0.0,0.0,1.0,0,7,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00041,P3,3,24.0,Account Access,Password Reset,-0.5,-0.866025,0.0,1.0,0,7,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00042,P4,4,48.0,Account Access,Login Failure,0.0,1.0,0.781831,0.62349,0,5,0,0,Advanced,Home & Garden,UK & Europe,0
+EXTTEST-00043,P2,2,8.0,Notifications,Email Not Received,-0.258819,0.965926,0.433884,-0.900969,0,9,0,0,Foundation,Electronics,North America,0
+EXTTEST-00044,P4,4,48.0,Payments & Checkout,3DS Authentication,0.965926,0.258819,0.0,1.0,0,4,0,0,Advanced,Grocery,UK & Europe,0
+EXTTEST-00045,P3,3,24.0,API Integrations,Endpoint Timeout,0.258819,0.965926,0.433884,-0.900969,0,10,0,1,Foundation,Grocery,UK & Europe,1
+EXTTEST-00046,P3,3,24.0,Payments & Checkout,Payout Delays,0.965926,0.258819,-0.974928,-0.222521,1,9,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00047,P1,1,2.0,Fulfilment & Logistics,Order Status Error,-0.258819,0.965926,-0.974928,-0.222521,1,6,0,0,Advanced,Grocery,Asia-Pacific,1
+EXTTEST-00048,P2,2,8.0,Payments & Checkout,3DS Authentication,0.707107,0.707107,-0.781831,0.62349,1,3,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00049,P3,3,24.0,API Integrations,Endpoint Timeout,-0.258819,0.965926,0.433884,-0.900969,0,7,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00050,P3,3,24.0,Notifications,Push Delivery Failure,-0.707107,0.707107,0.433884,-0.900969,0,9,0,0,Foundation,Fashion,North America,1
+EXTTEST-00051,P1,1,2.0,Notifications,SMS Delay,0.707107,0.707107,-0.433884,-0.900969,0,5,0,0,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00052,P3,3,24.0,Notifications,Template Error,0.258819,0.965926,-0.781831,0.62349,1,8,0,0,Advanced,Fashion,North America,0
+EXTTEST-00053,P3,3,24.0,Fulfilment & Logistics,Order Status Error,-0.965926,-0.258819,-0.433884,-0.900969,0,12,0,0,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00054,P2,2,8.0,API Integrations,Rate Limiting,-1.0,-0.0,0.974928,-0.222521,0,3,0,0,Advanced,Grocery,North America,0
+EXTTEST-00055,P3,3,24.0,Payments & Checkout,Refund Processing,0.965926,0.258819,-0.781831,0.62349,1,1,1,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00056,P3,3,24.0,Payments & Checkout,Refund Processing,-0.965926,-0.258819,0.781831,0.62349,0,3,0,0,Advanced,Home & Garden,Asia-Pacific,0
+EXTTEST-00057,P2,2,8.0,Fulfilment & Logistics,Order Status Error,0.866025,-0.5,-0.433884,-0.900969,0,11,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00058,P4,4,48.0,Account Access,Account Lockout,-0.707107,0.707107,-0.781831,0.62349,1,7,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00059,P2,2,8.0,API Integrations,Endpoint Timeout,0.0,1.0,-0.781831,0.62349,1,4,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00060,P4,4,48.0,Fulfilment & Logistics,Carrier Sync Failure,0.866025,0.5,0.781831,0.62349,0,10,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00061,P2,2,8.0,Account Access,MFA Issue,0.258819,0.965926,-0.433884,-0.900969,0,4,0,0,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00062,P3,3,24.0,Notifications,Email Not Received,0.866025,-0.5,0.0,1.0,0,8,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00063,P4,4,48.0,Payments & Checkout,Payout Delays,0.965926,-0.258819,-0.781831,0.62349,1,1,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00064,P1,1,2.0,API Integrations,Rate Limiting,-0.965926,0.258819,0.433884,-0.900969,0,3,0,0,Foundation,Fashion,North America,0
+EXTTEST-00065,P4,4,48.0,Account Access,Account Lockout,-0.866025,0.5,-0.433884,-0.900969,0,12,0,1,Foundation,Fashion,North America,0
+EXTTEST-00066,P3,3,24.0,Payments & Checkout,Card Declines,-0.5,0.866025,0.781831,0.62349,0,4,0,0,Foundation,Home & Garden,Asia-Pacific,0
+EXTTEST-00067,P3,3,24.0,Payments & Checkout,Card Declines,-0.258819,-0.965926,0.433884,-0.900969,0,10,0,0,Advanced,Sporting Goods,UK & Europe,0
+EXTTEST-00068,P3,3,24.0,Payments & Checkout,Refund Processing,0.866025,-0.5,0.0,1.0,0,8,0,0,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00069,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.866025,0.5,-0.433884,-0.900969,0,9,1,0,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00070,P3,3,24.0,Payments & Checkout,Refund Processing,0.965926,0.258819,-0.781831,0.62349,1,7,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00071,P2,2,8.0,Payments & Checkout,Card Declines,0.866025,0.5,0.433884,-0.900969,0,10,0,0,Advanced,Fashion,Asia-Pacific,1
+EXTTEST-00072,P3,3,24.0,Notifications,SMS Delay,0.866025,-0.5,-0.433884,-0.900969,0,3,0,0,Advanced,Grocery,UK & Europe,0
+EXTTEST-00073,P3,3,24.0,Account Access,Login Failure,-0.258819,-0.965926,-0.781831,0.62349,1,6,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00074,P3,3,24.0,Payments & Checkout,Payout Delays,0.707107,0.707107,0.781831,0.62349,0,3,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00075,P3,3,24.0,API Integrations,Webhook Failures,0.5,-0.866025,0.0,1.0,0,5,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00076,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.707107,-0.707107,0.974928,-0.222521,0,8,0,0,Advanced,Electronics,UK & Europe,1
+EXTTEST-00077,P3,3,24.0,Notifications,SMS Delay,0.0,1.0,0.0,1.0,0,4,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00078,P3,3,24.0,API Integrations,Endpoint Timeout,-0.258819,-0.965926,-0.433884,-0.900969,0,7,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00079,P2,2,8.0,Payments & Checkout,Card Declines,-0.258819,-0.965926,-0.433884,-0.900969,0,1,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00080,P3,3,24.0,Notifications,Push Delivery Failure,-0.866025,0.5,-0.974928,-0.222521,1,11,0,0,Advanced,Sporting Goods,North America,1
+EXTTEST-00081,P2,2,8.0,Fulfilment & Logistics,Tracking Update Delay,0.258819,0.965926,0.781831,0.62349,0,9,0,0,Foundation,Electronics,North America,1
+EXTTEST-00082,P4,4,48.0,Account Access,Account Lockout,0.707107,0.707107,0.974928,-0.222521,0,3,0,0,Foundation,Electronics,North America,0
+EXTTEST-00083,P4,4,48.0,Notifications,SMS Delay,0.866025,-0.5,0.0,1.0,0,7,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00084,P3,3,24.0,Fulfilment & Logistics,Label Generation,1.0,0.0,0.0,1.0,0,10,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00085,P3,3,24.0,Account Access,Password Reset,-0.707107,0.707107,0.781831,0.62349,0,6,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00086,P2,2,8.0,Fulfilment & Logistics,Tracking Update Delay,-0.965926,-0.258819,0.974928,-0.222521,0,5,0,0,Foundation,Electronics,North America,1
+EXTTEST-00087,P1,1,2.0,Notifications,SMS Delay,0.258819,0.965926,0.433884,-0.900969,0,5,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00088,P3,3,24.0,Payments & Checkout,Card Declines,0.866025,-0.5,0.433884,-0.900969,0,5,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00089,P3,3,24.0,API Integrations,Rate Limiting,-0.866025,-0.5,0.433884,-0.900969,0,6,0,1,Advanced,Electronics,UK & Europe,0
+EXTTEST-00090,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,1.0,0.0,0.0,1.0,0,3,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00091,P2,2,8.0,Notifications,SMS Delay,0.258819,-0.965926,-0.433884,-0.900969,0,9,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00092,P3,3,24.0,Account Access,Login Failure,0.0,-1.0,-0.974928,-0.222521,1,4,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00093,P3,3,24.0,Payments & Checkout,Payout Delays,-0.5,-0.866025,-0.974928,-0.222521,1,10,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00094,P3,3,24.0,Payments & Checkout,Refund Processing,-0.707107,-0.707107,0.433884,-0.900969,0,3,1,0,Foundation,Electronics,North America,0
+EXTTEST-00095,P4,4,48.0,Notifications,SMS Delay,0.258819,-0.965926,0.781831,0.62349,0,1,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00096,P2,2,8.0,API Integrations,Authentication Error,0.0,1.0,-0.974928,-0.222521,1,2,0,0,Foundation,Grocery,North America,0
+EXTTEST-00097,P2,2,8.0,API Integrations,Endpoint Timeout,0.5,0.866025,0.433884,-0.900969,0,7,0,1,Foundation,Grocery,North America,1
+EXTTEST-00098,P3,3,24.0,Account Access,Login Failure,0.0,1.0,0.0,1.0,0,6,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00099,P3,3,24.0,API Integrations,Endpoint Timeout,-0.258819,0.965926,-0.974928,-0.222521,1,6,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00100,P4,4,48.0,Fulfilment & Logistics,Label Generation,0.866025,-0.5,0.433884,-0.900969,0,9,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00101,P4,4,48.0,Account Access,Login Failure,-0.5,-0.866025,-0.781831,0.62349,1,2,0,0,Foundation,Fashion,North America,0
+EXTTEST-00102,P4,4,48.0,API Integrations,Authentication Error,0.258819,0.965926,0.781831,0.62349,0,4,0,1,Foundation,Electronics,North America,0
+EXTTEST-00103,P1,1,2.0,Notifications,Email Not Received,-0.258819,-0.965926,-0.781831,0.62349,1,8,0,0,Advanced,Sporting Goods,North America,1
+EXTTEST-00104,P4,4,48.0,API Integrations,Rate Limiting,0.258819,0.965926,0.974928,-0.222521,0,5,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00105,P3,3,24.0,API Integrations,Rate Limiting,-0.965926,0.258819,-0.781831,0.62349,1,12,0,1,Foundation,Home & Garden,Asia-Pacific,0
+EXTTEST-00106,P4,4,48.0,Notifications,Template Error,-0.5,0.866025,-0.974928,-0.222521,1,11,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00107,P3,3,24.0,Payments & Checkout,Payout Delays,0.0,1.0,0.781831,0.62349,0,6,0,0,Advanced,Fashion,North America,1
+EXTTEST-00108,P1,1,2.0,API Integrations,Rate Limiting,0.707107,0.707107,-0.781831,0.62349,1,4,0,0,Advanced,Electronics,North America,0
+EXTTEST-00109,P2,2,8.0,API Integrations,Endpoint Timeout,0.258819,-0.965926,0.433884,-0.900969,0,4,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00110,P3,3,24.0,Payments & Checkout,Payout Delays,0.0,1.0,-0.781831,0.62349,1,7,0,0,Advanced,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00111,P1,1,2.0,Notifications,Email Not Received,-0.866025,-0.5,0.433884,-0.900969,0,10,1,0,Foundation,Grocery,Asia-Pacific,1
+EXTTEST-00112,P4,4,48.0,Account Access,Password Reset,-0.258819,-0.965926,0.974928,-0.222521,0,7,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00113,P4,4,48.0,Payments & Checkout,Refund Processing,0.965926,-0.258819,0.974928,-0.222521,0,8,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00114,P1,1,2.0,API Integrations,Authentication Error,-0.707107,-0.707107,0.433884,-0.900969,0,5,0,0,Foundation,Electronics,North America,1
+EXTTEST-00115,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.258819,0.965926,-0.433884,-0.900969,0,3,0,0,Foundation,Fashion,North America,1
+EXTTEST-00116,P2,2,8.0,Account Access,MFA Issue,0.707107,-0.707107,0.781831,0.62349,0,6,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00117,P3,3,24.0,Notifications,Template Error,-0.866025,-0.5,-0.781831,0.62349,1,8,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00118,P3,3,24.0,Payments & Checkout,Refund Processing,0.707107,0.707107,-0.974928,-0.222521,1,6,0,1,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00119,P3,3,24.0,Notifications,SMS Delay,-0.5,-0.866025,-0.433884,-0.900969,0,6,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00120,P3,3,24.0,Account Access,Account Lockout,-0.258819,0.965926,-0.781831,0.62349,1,6,0,0,Foundation,Sporting Goods,Asia-Pacific,0
+EXTTEST-00121,P3,3,24.0,Fulfilment & Logistics,Label Generation,-0.707107,-0.707107,0.974928,-0.222521,0,9,0,0,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00122,P3,3,24.0,Payments & Checkout,Refund Processing,-0.965926,0.258819,0.781831,0.62349,0,11,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00123,P3,3,24.0,Notifications,Template Error,0.965926,0.258819,-0.974928,-0.222521,1,8,0,0,Advanced,Grocery,Asia-Pacific,1
+EXTTEST-00124,P4,4,48.0,Fulfilment & Logistics,Order Status Error,0.5,-0.866025,0.433884,-0.900969,0,8,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00125,P3,3,24.0,Account Access,MFA Issue,0.866025,0.5,0.781831,0.62349,0,6,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00126,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-1.0,-0.0,-0.433884,-0.900969,0,9,0,0,Advanced,Home & Garden,North America,0
+EXTTEST-00127,P3,3,24.0,Notifications,Push Delivery Failure,0.965926,-0.258819,-0.433884,-0.900969,0,5,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00128,P2,2,8.0,Payments & Checkout,3DS Authentication,-0.965926,-0.258819,0.781831,0.62349,0,10,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00129,P1,1,2.0,Payments & Checkout,Payout Delays,0.0,1.0,-0.974928,-0.222521,1,2,0,0,Foundation,Electronics,North America,1
+EXTTEST-00130,P3,3,24.0,Notifications,Push Delivery Failure,0.0,-1.0,-0.974928,-0.222521,1,6,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00131,P4,4,48.0,Fulfilment & Logistics,Order Status Error,0.965926,0.258819,-0.974928,-0.222521,1,8,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00132,P3,3,24.0,API Integrations,Endpoint Timeout,0.965926,-0.258819,0.0,1.0,0,4,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00133,P4,4,48.0,API Integrations,Authentication Error,0.0,-1.0,0.974928,-0.222521,0,9,0,1,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00134,P3,3,24.0,Payments & Checkout,3DS Authentication,0.707107,0.707107,0.781831,0.62349,0,6,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00135,P1,1,2.0,API Integrations,Authentication Error,-0.5,0.866025,0.433884,-0.900969,0,4,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00136,P1,1,2.0,Account Access,Password Reset,0.258819,0.965926,0.433884,-0.900969,0,7,0,0,Advanced,Electronics,UK & Europe,1
+EXTTEST-00137,P4,4,48.0,Payments & Checkout,Payout Delays,-0.866025,-0.5,-0.781831,0.62349,1,9,0,0,Advanced,Grocery,Asia-Pacific,1
+EXTTEST-00138,P3,3,24.0,API Integrations,Endpoint Timeout,-1.0,-0.0,0.0,1.0,0,12,0,0,Advanced,Pharmaceuticals,North America,1
+EXTTEST-00139,P4,4,48.0,Payments & Checkout,Card Declines,0.5,-0.866025,0.433884,-0.900969,0,4,0,0,Foundation,Grocery,Asia-Pacific,1
+EXTTEST-00140,P1,1,2.0,Fulfilment & Logistics,Label Generation,0.866025,0.5,0.0,1.0,0,7,1,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00141,P1,1,2.0,Account Access,Account Lockout,-0.258819,0.965926,-0.974928,-0.222521,1,1,1,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00142,P3,3,24.0,API Integrations,Rate Limiting,-0.965926,0.258819,-0.974928,-0.222521,1,10,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00143,P1,1,2.0,Notifications,Template Error,-0.5,-0.866025,0.974928,-0.222521,0,10,0,0,Foundation,Grocery,Asia-Pacific,1
+EXTTEST-00144,P3,3,24.0,Account Access,Password Reset,0.866025,-0.5,-0.974928,-0.222521,1,9,1,0,Foundation,Electronics,North America,1
+EXTTEST-00145,P2,2,8.0,Payments & Checkout,Payout Delays,-0.965926,-0.258819,-0.433884,-0.900969,0,4,0,0,Advanced,Pharmaceuticals,North America,1
+EXTTEST-00146,P4,4,48.0,Account Access,Login Failure,-0.707107,-0.707107,0.433884,-0.900969,0,10,0,1,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00147,P2,2,8.0,Account Access,MFA Issue,0.5,0.866025,0.781831,0.62349,0,12,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00148,P2,2,8.0,Notifications,Email Not Received,0.707107,-0.707107,0.433884,-0.900969,0,8,0,0,Foundation,Electronics,Asia-Pacific,1
+EXTTEST-00149,P4,4,48.0,Fulfilment & Logistics,Label Generation,-0.258819,0.965926,-0.781831,0.62349,1,4,0,0,Advanced,Electronics,Asia-Pacific,0
+EXTTEST-00150,P2,2,8.0,Fulfilment & Logistics,Label Generation,-0.258819,-0.965926,0.0,1.0,0,2,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00151,P2,2,8.0,Notifications,Template Error,-0.965926,-0.258819,0.974928,-0.222521,0,12,0,0,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00152,P4,4,48.0,Notifications,Template Error,0.965926,-0.258819,0.974928,-0.222521,0,1,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00153,P4,4,48.0,API Integrations,Authentication Error,1.0,0.0,-0.974928,-0.222521,1,7,0,0,Advanced,Grocery,North America,0
+EXTTEST-00154,P3,3,24.0,Notifications,SMS Delay,-0.965926,-0.258819,0.0,1.0,0,2,0,0,Advanced,Electronics,North America,0
+EXTTEST-00155,P3,3,24.0,Notifications,SMS Delay,-1.0,-0.0,0.0,1.0,0,6,0,0,Advanced,Fashion,North America,0
+EXTTEST-00156,P4,4,48.0,API Integrations,Authentication Error,0.5,-0.866025,0.433884,-0.900969,0,10,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00157,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.707107,-0.707107,-0.433884,-0.900969,0,11,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00158,P4,4,48.0,Account Access,MFA Issue,0.258819,0.965926,-0.781831,0.62349,1,7,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00159,P1,1,2.0,Notifications,SMS Delay,-0.866025,0.5,0.433884,-0.900969,0,8,0,0,Foundation,Sporting Goods,Asia-Pacific,0
+EXTTEST-00160,P4,4,48.0,API Integrations,Rate Limiting,0.965926,0.258819,0.974928,-0.222521,0,8,0,0,Advanced,Sporting Goods,UK & Europe,1
+EXTTEST-00161,P4,4,48.0,Account Access,Password Reset,-0.258819,0.965926,-0.974928,-0.222521,1,2,1,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00162,P4,4,48.0,Notifications,Email Not Received,0.258819,0.965926,0.974928,-0.222521,0,3,1,0,Foundation,Electronics,Asia-Pacific,0
+EXTTEST-00163,P2,2,8.0,API Integrations,Endpoint Timeout,-1.0,-0.0,0.781831,0.62349,0,6,0,1,Foundation,Home & Garden,North America,1
+EXTTEST-00164,P3,3,24.0,API Integrations,Webhook Failures,0.707107,0.707107,0.974928,-0.222521,0,4,1,1,Advanced,Grocery,North America,0
+EXTTEST-00165,P3,3,24.0,Notifications,Email Not Received,-0.258819,0.965926,-0.974928,-0.222521,1,1,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00166,P3,3,24.0,Payments & Checkout,Payout Delays,-0.5,-0.866025,0.974928,-0.222521,0,1,0,0,Advanced,Home & Garden,North America,0
+EXTTEST-00167,P4,4,48.0,Payments & Checkout,Card Declines,0.965926,-0.258819,-0.974928,-0.222521,1,1,0,0,Foundation,Fashion,North America,1
+EXTTEST-00168,P2,2,8.0,Payments & Checkout,Payout Delays,0.0,1.0,0.781831,0.62349,0,7,0,0,Advanced,Fashion,North America,0
+EXTTEST-00169,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.0,-1.0,0.0,1.0,0,4,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00170,P3,3,24.0,Account Access,Login Failure,-0.707107,-0.707107,-0.974928,-0.222521,1,10,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00171,P4,4,48.0,Account Access,Login Failure,0.707107,-0.707107,0.974928,-0.222521,0,8,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00172,P3,3,24.0,Account Access,MFA Issue,0.258819,0.965926,-0.781831,0.62349,1,7,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00173,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.0,1.0,0.0,1.0,0,5,0,0,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00174,P3,3,24.0,Account Access,Login Failure,-0.258819,-0.965926,0.974928,-0.222521,0,9,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00175,P4,4,48.0,Notifications,Email Not Received,-0.707107,0.707107,0.0,1.0,0,4,1,0,Foundation,Home & Garden,North America,0
+EXTTEST-00176,P3,3,24.0,API Integrations,Rate Limiting,-0.5,-0.866025,-0.781831,0.62349,1,12,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00177,P3,3,24.0,Payments & Checkout,3DS Authentication,0.5,0.866025,0.974928,-0.222521,0,1,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00178,P4,4,48.0,API Integrations,Endpoint Timeout,0.5,0.866025,-0.974928,-0.222521,1,6,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00179,P3,3,24.0,Notifications,Push Delivery Failure,-0.965926,0.258819,-0.433884,-0.900969,0,2,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00180,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.0,1.0,-0.974928,-0.222521,1,11,0,0,Advanced,Home & Garden,North America,0
+EXTTEST-00181,P3,3,24.0,Account Access,Login Failure,-0.258819,0.965926,-0.781831,0.62349,1,9,0,0,Advanced,Electronics,UK & Europe,0
+EXTTEST-00182,P3,3,24.0,Notifications,Push Delivery Failure,-0.258819,-0.965926,0.0,1.0,0,7,0,1,Foundation,Fashion,North America,1
+EXTTEST-00183,P3,3,24.0,API Integrations,Webhook Failures,-0.866025,0.5,0.433884,-0.900969,0,6,0,0,Foundation,Grocery,North America,0
+EXTTEST-00184,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.707107,0.707107,-0.781831,0.62349,1,8,0,0,Foundation,Fashion,North America,0
+EXTTEST-00185,P2,2,8.0,Notifications,SMS Delay,0.0,-1.0,-0.433884,-0.900969,0,3,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00186,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.866025,-0.5,-0.974928,-0.222521,1,6,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00187,P3,3,24.0,Payments & Checkout,Card Declines,-0.866025,-0.5,0.974928,-0.222521,0,1,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00188,P1,1,2.0,Fulfilment & Logistics,Carrier Sync Failure,0.5,-0.866025,0.433884,-0.900969,0,11,0,0,Advanced,Electronics,North America,1
+EXTTEST-00189,P4,4,48.0,API Integrations,Authentication Error,-0.5,-0.866025,-0.974928,-0.222521,1,7,0,1,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00190,P2,2,8.0,API Integrations,Rate Limiting,0.965926,0.258819,0.781831,0.62349,0,11,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00191,P3,3,24.0,API Integrations,Webhook Failures,0.965926,-0.258819,0.0,1.0,0,5,0,0,Advanced,Pharmaceuticals,UK & Europe,0
+EXTTEST-00192,P3,3,24.0,Account Access,MFA Issue,-0.866025,-0.5,-0.433884,-0.900969,0,9,0,1,Advanced,Sporting Goods,UK & Europe,0
+EXTTEST-00193,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.5,-0.866025,-0.974928,-0.222521,1,10,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00194,P3,3,24.0,Notifications,SMS Delay,-0.965926,0.258819,0.781831,0.62349,0,3,0,1,Advanced,Sporting Goods,North America,0
+EXTTEST-00195,P3,3,24.0,Notifications,SMS Delay,0.866025,0.5,0.433884,-0.900969,0,4,0,1,Foundation,Grocery,North America,0
+EXTTEST-00196,P4,4,48.0,Fulfilment & Logistics,Order Status Error,-0.258819,0.965926,-0.974928,-0.222521,1,4,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00197,P4,4,48.0,Notifications,SMS Delay,-0.965926,0.258819,0.433884,-0.900969,0,7,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00198,P3,3,24.0,Payments & Checkout,Card Declines,0.707107,-0.707107,0.433884,-0.900969,0,12,0,0,Advanced,Electronics,North America,0
+EXTTEST-00199,P3,3,24.0,API Integrations,Rate Limiting,-0.707107,0.707107,0.433884,-0.900969,0,6,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00200,P4,4,48.0,Fulfilment & Logistics,Tracking Update Delay,-1.0,-0.0,0.0,1.0,0,11,0,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00201,P4,4,48.0,Notifications,Email Not Received,0.707107,-0.707107,-0.781831,0.62349,1,1,0,0,Foundation,Sporting Goods,Asia-Pacific,0
+EXTTEST-00202,P2,2,8.0,Fulfilment & Logistics,Tracking Update Delay,0.5,-0.866025,0.0,1.0,0,11,0,0,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00203,P1,1,2.0,Notifications,Template Error,-0.258819,-0.965926,0.974928,-0.222521,0,4,0,0,Foundation,Electronics,North America,1
+EXTTEST-00204,P2,2,8.0,Notifications,Email Not Received,-0.866025,-0.5,0.974928,-0.222521,0,3,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00205,P4,4,48.0,Account Access,Login Failure,0.965926,-0.258819,-0.781831,0.62349,1,3,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00206,P1,1,2.0,Account Access,Login Failure,0.707107,0.707107,0.433884,-0.900969,0,3,0,1,Advanced,Fashion,UK & Europe,1
+EXTTEST-00207,P3,3,24.0,API Integrations,Endpoint Timeout,0.707107,-0.707107,0.974928,-0.222521,0,7,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00208,P3,3,24.0,Notifications,Template Error,0.0,1.0,0.781831,0.62349,0,4,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00209,P3,3,24.0,API Integrations,Endpoint Timeout,0.258819,0.965926,-0.781831,0.62349,1,10,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00210,P1,1,2.0,Fulfilment & Logistics,Label Generation,0.5,-0.866025,0.0,1.0,0,3,1,0,Advanced,Sporting Goods,North America,1
+EXTTEST-00211,P2,2,8.0,Payments & Checkout,Refund Processing,0.965926,-0.258819,-0.974928,-0.222521,1,2,0,0,Advanced,Sporting Goods,Asia-Pacific,1
+EXTTEST-00212,P3,3,24.0,Notifications,Push Delivery Failure,0.707107,0.707107,0.0,1.0,0,5,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00213,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.258819,0.965926,0.781831,0.62349,0,3,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00214,P4,4,48.0,Payments & Checkout,Card Declines,-0.965926,-0.258819,0.0,1.0,0,7,0,0,Foundation,Fashion,North America,0
+EXTTEST-00215,P4,4,48.0,Notifications,Push Delivery Failure,-0.866025,0.5,-0.781831,0.62349,1,1,0,0,Advanced,Fashion,North America,0
+EXTTEST-00216,P2,2,8.0,Notifications,Template Error,0.965926,-0.258819,-0.974928,-0.222521,1,7,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00217,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.5,0.866025,0.974928,-0.222521,0,1,0,1,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00218,P2,2,8.0,API Integrations,Authentication Error,0.258819,-0.965926,0.974928,-0.222521,0,12,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00219,P2,2,8.0,Payments & Checkout,Card Declines,-0.707107,0.707107,0.433884,-0.900969,0,11,0,0,Foundation,Fashion,North America,1
+EXTTEST-00220,P2,2,8.0,Payments & Checkout,Refund Processing,-0.866025,-0.5,0.433884,-0.900969,0,8,0,0,Advanced,Electronics,Asia-Pacific,0
+EXTTEST-00221,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.707107,0.707107,0.0,1.0,0,4,0,1,Foundation,Grocery,Asia-Pacific,1
+EXTTEST-00222,P3,3,24.0,Account Access,Password Reset,0.707107,-0.707107,0.974928,-0.222521,0,6,0,0,Advanced,Grocery,UK & Europe,0
+EXTTEST-00223,P3,3,24.0,Payments & Checkout,Card Declines,-0.5,0.866025,0.781831,0.62349,0,3,0,1,Advanced,Grocery,North America,0
+EXTTEST-00224,P3,3,24.0,Fulfilment & Logistics,Label Generation,-0.707107,0.707107,0.974928,-0.222521,0,9,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00225,P3,3,24.0,API Integrations,Rate Limiting,-0.707107,0.707107,0.781831,0.62349,0,3,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00226,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.707107,0.707107,-0.974928,-0.222521,1,7,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00227,P1,1,2.0,Payments & Checkout,Payout Delays,0.866025,-0.5,-0.781831,0.62349,1,4,1,0,Advanced,Grocery,UK & Europe,1
+EXTTEST-00228,P4,4,48.0,Account Access,Login Failure,-0.707107,-0.707107,0.974928,-0.222521,0,11,1,0,Advanced,Grocery,North America,0
+EXTTEST-00229,P4,4,48.0,Notifications,SMS Delay,0.258819,0.965926,-0.781831,0.62349,1,3,1,0,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00230,P3,3,24.0,Payments & Checkout,Card Declines,0.866025,-0.5,0.433884,-0.900969,0,4,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00231,P3,3,24.0,Fulfilment & Logistics,Order Status Error,1.0,0.0,0.433884,-0.900969,0,10,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00232,P4,4,48.0,Account Access,MFA Issue,-0.965926,-0.258819,0.433884,-0.900969,0,8,0,0,Foundation,Electronics,North America,0
+EXTTEST-00233,P4,4,48.0,Notifications,Email Not Received,0.258819,-0.965926,0.433884,-0.900969,0,12,0,1,Foundation,Home & Garden,North America,0
+EXTTEST-00234,P4,4,48.0,Account Access,Login Failure,-0.866025,0.5,-0.433884,-0.900969,0,5,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00235,P2,2,8.0,Fulfilment & Logistics,Label Generation,0.0,-1.0,-0.433884,-0.900969,0,5,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00236,P3,3,24.0,API Integrations,Endpoint Timeout,0.0,-1.0,-0.433884,-0.900969,0,5,0,0,Foundation,Sporting Goods,UK & Europe,0
+EXTTEST-00237,P3,3,24.0,Payments & Checkout,3DS Authentication,0.965926,-0.258819,0.974928,-0.222521,0,8,0,0,Advanced,Sporting Goods,Asia-Pacific,1
+EXTTEST-00238,P2,2,8.0,Account Access,MFA Issue,-0.707107,-0.707107,0.433884,-0.900969,0,3,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00239,P3,3,24.0,API Integrations,Webhook Failures,0.0,1.0,-0.781831,0.62349,1,10,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00240,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.5,-0.866025,-0.433884,-0.900969,0,9,0,0,Advanced,Sporting Goods,Asia-Pacific,1
+EXTTEST-00241,P4,4,48.0,Fulfilment & Logistics,Order Status Error,-0.965926,0.258819,0.433884,-0.900969,0,8,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00242,P2,2,8.0,Payments & Checkout,Payout Delays,-0.707107,0.707107,0.433884,-0.900969,0,12,0,0,Advanced,Grocery,UK & Europe,0
+EXTTEST-00243,P4,4,48.0,API Integrations,Endpoint Timeout,0.5,-0.866025,-0.433884,-0.900969,0,11,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00244,P1,1,2.0,Payments & Checkout,3DS Authentication,0.5,-0.866025,-0.974928,-0.222521,1,4,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00245,P3,3,24.0,API Integrations,Rate Limiting,0.5,-0.866025,0.433884,-0.900969,0,4,0,0,Foundation,Grocery,Asia-Pacific,1
+EXTTEST-00246,P3,3,24.0,Notifications,Email Not Received,0.258819,0.965926,0.781831,0.62349,0,12,0,0,Foundation,Grocery,North America,1
+EXTTEST-00247,P3,3,24.0,Account Access,Account Lockout,-0.5,-0.866025,0.0,1.0,0,6,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00248,P4,4,48.0,Payments & Checkout,Refund Processing,-0.866025,0.5,-0.974928,-0.222521,1,8,1,0,Foundation,Sporting Goods,UK & Europe,0
+EXTTEST-00249,P4,4,48.0,Account Access,Account Lockout,-0.258819,-0.965926,0.974928,-0.222521,0,1,0,0,Advanced,Pharmaceuticals,UK & Europe,0
+EXTTEST-00250,P3,3,24.0,Payments & Checkout,Refund Processing,-1.0,-0.0,-0.974928,-0.222521,1,12,0,1,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00251,P4,4,48.0,Account Access,Login Failure,-0.258819,0.965926,0.781831,0.62349,0,7,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00252,P2,2,8.0,Fulfilment & Logistics,Order Status Error,-0.5,0.866025,0.781831,0.62349,0,1,0,0,Foundation,Fashion,North America,0
+EXTTEST-00253,P3,3,24.0,Payments & Checkout,Refund Processing,-0.707107,-0.707107,-0.974928,-0.222521,1,9,0,0,Foundation,Electronics,North America,0
+EXTTEST-00254,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.5,-0.866025,0.974928,-0.222521,0,8,0,1,Foundation,Electronics,UK & Europe,1
+EXTTEST-00255,P3,3,24.0,API Integrations,Authentication Error,-0.5,0.866025,-0.974928,-0.222521,1,7,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00256,P3,3,24.0,API Integrations,Endpoint Timeout,-0.707107,-0.707107,0.0,1.0,0,5,1,1,Foundation,Electronics,Asia-Pacific,1
+EXTTEST-00257,P3,3,24.0,Account Access,Password Reset,0.866025,-0.5,-0.433884,-0.900969,0,11,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00258,P3,3,24.0,Account Access,MFA Issue,0.258819,-0.965926,0.433884,-0.900969,0,6,0,1,Foundation,Fashion,UK & Europe,0
+EXTTEST-00259,P4,4,48.0,Account Access,MFA Issue,0.0,-1.0,0.974928,-0.222521,0,10,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00260,P4,4,48.0,Notifications,Push Delivery Failure,0.707107,0.707107,0.781831,0.62349,0,4,0,0,Foundation,Grocery,North America,1
+EXTTEST-00261,P3,3,24.0,API Integrations,Authentication Error,0.965926,-0.258819,0.974928,-0.222521,0,11,0,0,Advanced,Electronics,North America,1
+EXTTEST-00262,P3,3,24.0,API Integrations,Rate Limiting,0.0,1.0,0.974928,-0.222521,0,4,1,0,Advanced,Home & Garden,UK & Europe,0
+EXTTEST-00263,P3,3,24.0,Account Access,MFA Issue,-0.707107,0.707107,0.433884,-0.900969,0,11,0,1,Foundation,Grocery,UK & Europe,1
+EXTTEST-00264,P3,3,24.0,Payments & Checkout,Payout Delays,0.965926,-0.258819,0.974928,-0.222521,0,9,0,1,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00265,P4,4,48.0,Payments & Checkout,Payout Delays,0.866025,0.5,0.433884,-0.900969,0,3,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00266,P4,4,48.0,Account Access,Login Failure,0.965926,-0.258819,-0.974928,-0.222521,1,4,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00267,P4,4,48.0,API Integrations,Webhook Failures,-1.0,-0.0,-0.781831,0.62349,1,3,0,0,Advanced,Fashion,UK & Europe,0
+EXTTEST-00268,P4,4,48.0,Fulfilment & Logistics,Label Generation,-0.5,0.866025,-0.974928,-0.222521,1,3,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00269,P3,3,24.0,Fulfilment & Logistics,Order Status Error,-0.866025,-0.5,-0.974928,-0.222521,1,3,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00270,P2,2,8.0,Notifications,SMS Delay,0.0,1.0,-0.781831,0.62349,1,10,0,1,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00271,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.965926,0.258819,0.0,1.0,0,5,0,0,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00272,P2,2,8.0,Fulfilment & Logistics,Carrier Sync Failure,0.258819,0.965926,0.974928,-0.222521,0,10,0,0,Foundation,Electronics,North America,0
+EXTTEST-00273,P3,3,24.0,Payments & Checkout,Payout Delays,1.0,0.0,-0.974928,-0.222521,1,7,0,0,Advanced,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00274,P3,3,24.0,Payments & Checkout,Card Declines,0.866025,-0.5,0.433884,-0.900969,0,1,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00275,P3,3,24.0,Notifications,Template Error,0.258819,-0.965926,-0.781831,0.62349,1,3,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00276,P4,4,48.0,API Integrations,Authentication Error,-0.707107,-0.707107,0.0,1.0,0,3,0,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00277,P1,1,2.0,Payments & Checkout,Card Declines,-0.866025,-0.5,-0.781831,0.62349,1,4,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00278,P3,3,24.0,Payments & Checkout,Card Declines,-0.5,0.866025,0.781831,0.62349,0,4,0,0,Advanced,Electronics,Asia-Pacific,0
+EXTTEST-00279,P4,4,48.0,Account Access,Login Failure,-0.707107,-0.707107,0.433884,-0.900969,0,4,0,0,Foundation,Electronics,North America,0
+EXTTEST-00280,P3,3,24.0,API Integrations,Rate Limiting,-1.0,-0.0,-0.433884,-0.900969,0,1,0,0,Advanced,Home & Garden,Asia-Pacific,0
+EXTTEST-00281,P3,3,24.0,Notifications,SMS Delay,0.0,1.0,0.433884,-0.900969,0,5,0,0,Advanced,Home & Garden,UK & Europe,1
+EXTTEST-00282,P4,4,48.0,API Integrations,Webhook Failures,-0.5,-0.866025,-0.433884,-0.900969,0,6,0,0,Foundation,Fashion,North America,1
+EXTTEST-00283,P3,3,24.0,Account Access,MFA Issue,0.0,1.0,-0.781831,0.62349,1,5,0,0,Foundation,Electronics,Asia-Pacific,0
+EXTTEST-00284,P1,1,2.0,Notifications,Push Delivery Failure,-0.258819,-0.965926,-0.433884,-0.900969,0,12,1,0,Advanced,Home & Garden,Asia-Pacific,0
+EXTTEST-00285,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.258819,-0.965926,0.0,1.0,0,5,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00286,P2,2,8.0,API Integrations,Endpoint Timeout,-1.0,-0.0,0.781831,0.62349,0,4,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00287,P3,3,24.0,Payments & Checkout,Refund Processing,0.258819,0.965926,-0.781831,0.62349,1,1,0,1,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00288,P3,3,24.0,Notifications,Template Error,0.866025,0.5,0.0,1.0,0,2,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00289,P4,4,48.0,Notifications,Email Not Received,-0.258819,-0.965926,0.974928,-0.222521,0,2,0,0,Foundation,Fashion,North America,1
+EXTTEST-00290,P3,3,24.0,Fulfilment & Logistics,Label Generation,-0.965926,0.258819,0.781831,0.62349,0,5,0,1,Advanced,Sporting Goods,North America,0
+EXTTEST-00291,P4,4,48.0,API Integrations,Authentication Error,1.0,0.0,-0.433884,-0.900969,0,2,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00292,P3,3,24.0,Account Access,Login Failure,-1.0,-0.0,-0.781831,0.62349,1,10,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00293,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.965926,0.258819,-0.781831,0.62349,1,9,0,0,Foundation,Fashion,North America,0
+EXTTEST-00294,P2,2,8.0,Account Access,Account Lockout,0.707107,0.707107,-0.781831,0.62349,1,3,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00295,P3,3,24.0,Fulfilment & Logistics,Label Generation,0.0,-1.0,-0.974928,-0.222521,1,7,0,0,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00296,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.866025,-0.5,0.974928,-0.222521,0,6,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00297,P1,1,2.0,Fulfilment & Logistics,Carrier Sync Failure,-0.5,-0.866025,0.974928,-0.222521,0,6,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00298,P3,3,24.0,API Integrations,Authentication Error,-0.5,-0.866025,-0.974928,-0.222521,1,5,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00299,P3,3,24.0,API Integrations,Endpoint Timeout,-0.707107,0.707107,0.0,1.0,0,2,0,0,Foundation,Electronics,Asia-Pacific,0
+EXTTEST-00300,P2,2,8.0,Account Access,Login Failure,0.866025,0.5,0.974928,-0.222521,0,1,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00301,P2,2,8.0,API Integrations,Endpoint Timeout,0.258819,-0.965926,0.433884,-0.900969,0,3,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00302,P2,2,8.0,Payments & Checkout,3DS Authentication,-0.258819,-0.965926,0.974928,-0.222521,0,8,0,1,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00303,P1,1,2.0,API Integrations,Endpoint Timeout,0.258819,0.965926,0.781831,0.62349,0,10,0,0,Foundation,Grocery,North America,0
+EXTTEST-00304,P4,4,48.0,API Integrations,Authentication Error,0.965926,-0.258819,0.781831,0.62349,0,8,0,1,Foundation,Electronics,Asia-Pacific,1
+EXTTEST-00305,P3,3,24.0,Notifications,Push Delivery Failure,0.0,-1.0,0.974928,-0.222521,0,4,0,0,Advanced,Sporting Goods,North America,1
+EXTTEST-00306,P2,2,8.0,Notifications,SMS Delay,-0.866025,0.5,0.974928,-0.222521,0,6,0,0,Advanced,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00307,P3,3,24.0,Payments & Checkout,Refund Processing,0.5,-0.866025,0.781831,0.62349,0,9,0,0,Foundation,Fashion,North America,0
+EXTTEST-00308,P3,3,24.0,Account Access,Password Reset,0.258819,0.965926,-0.781831,0.62349,1,2,0,1,Foundation,Electronics,North America,0
+EXTTEST-00309,P3,3,24.0,Account Access,Account Lockout,0.707107,0.707107,-0.781831,0.62349,1,9,0,1,Foundation,Sporting Goods,North America,1
+EXTTEST-00310,P1,1,2.0,Fulfilment & Logistics,Label Generation,0.0,-1.0,-0.974928,-0.222521,1,8,0,0,Advanced,Electronics,North America,1
+EXTTEST-00311,P2,2,8.0,API Integrations,Webhook Failures,0.965926,-0.258819,-0.781831,0.62349,1,7,0,0,Foundation,Grocery,North America,1
+EXTTEST-00312,P1,1,2.0,Fulfilment & Logistics,Tracking Update Delay,0.866025,-0.5,-0.974928,-0.222521,1,7,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00313,P2,2,8.0,Notifications,Template Error,-0.5,0.866025,0.974928,-0.222521,0,1,1,0,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00314,P2,2,8.0,Fulfilment & Logistics,Carrier Sync Failure,-0.5,-0.866025,-0.781831,0.62349,1,6,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00315,P4,4,48.0,Account Access,Password Reset,-0.866025,-0.5,0.0,1.0,0,3,1,0,Foundation,Home & Garden,Asia-Pacific,0
+EXTTEST-00316,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.707107,0.707107,-0.433884,-0.900969,0,8,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00317,P4,4,48.0,Account Access,Account Lockout,1.0,0.0,0.433884,-0.900969,0,11,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00318,P3,3,24.0,API Integrations,Authentication Error,-0.707107,0.707107,-0.433884,-0.900969,0,5,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00319,P3,3,24.0,Payments & Checkout,Payout Delays,-0.707107,0.707107,-0.974928,-0.222521,1,12,0,0,Foundation,Grocery,North America,0
+EXTTEST-00320,P1,1,2.0,Fulfilment & Logistics,Tracking Update Delay,-0.5,0.866025,0.433884,-0.900969,0,12,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00321,P3,3,24.0,Account Access,MFA Issue,0.0,-1.0,-0.781831,0.62349,1,1,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00322,P3,3,24.0,Notifications,Push Delivery Failure,0.258819,-0.965926,-0.974928,-0.222521,1,6,1,0,Foundation,Grocery,North America,0
+EXTTEST-00323,P3,3,24.0,Notifications,Email Not Received,0.965926,-0.258819,0.0,1.0,0,6,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00324,P4,4,48.0,API Integrations,Authentication Error,0.707107,-0.707107,0.433884,-0.900969,0,3,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00325,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.258819,0.965926,-0.974928,-0.222521,1,6,1,0,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00326,P3,3,24.0,Notifications,Template Error,-0.707107,-0.707107,0.781831,0.62349,0,11,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00327,P1,1,2.0,Payments & Checkout,Refund Processing,0.866025,-0.5,-0.433884,-0.900969,0,5,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00328,P3,3,24.0,Account Access,Password Reset,0.5,0.866025,-0.974928,-0.222521,1,11,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00329,P3,3,24.0,API Integrations,Rate Limiting,-0.258819,-0.965926,-0.781831,0.62349,1,8,0,0,Advanced,Grocery,North America,0
+EXTTEST-00330,P1,1,2.0,API Integrations,Rate Limiting,0.0,-1.0,-0.433884,-0.900969,0,10,1,0,Foundation,Fashion,North America,1
+EXTTEST-00331,P4,4,48.0,API Integrations,Endpoint Timeout,0.258819,-0.965926,-0.781831,0.62349,1,11,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00332,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.258819,-0.965926,0.0,1.0,0,2,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00333,P3,3,24.0,Payments & Checkout,Card Declines,0.866025,-0.5,0.0,1.0,0,7,0,0,Advanced,Pharmaceuticals,North America,1
+EXTTEST-00334,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.707107,-0.707107,-0.433884,-0.900969,0,4,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00335,P2,2,8.0,Fulfilment & Logistics,Carrier Sync Failure,0.0,1.0,0.0,1.0,0,5,0,0,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00336,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.707107,0.707107,-0.781831,0.62349,1,6,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00337,P3,3,24.0,Account Access,Login Failure,1.0,0.0,0.974928,-0.222521,0,1,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00338,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.0,-1.0,0.433884,-0.900969,0,10,0,0,Foundation,Grocery,North America,0
+EXTTEST-00339,P2,2,8.0,API Integrations,Endpoint Timeout,0.258819,-0.965926,-0.781831,0.62349,1,4,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00340,P3,3,24.0,Payments & Checkout,Payout Delays,-0.866025,0.5,0.974928,-0.222521,0,12,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00341,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.965926,0.258819,0.433884,-0.900969,0,2,0,0,Advanced,Home & Garden,UK & Europe,1
+EXTTEST-00342,P2,2,8.0,Notifications,SMS Delay,-0.5,-0.866025,-0.781831,0.62349,1,2,0,1,Foundation,Home & Garden,North America,1
+EXTTEST-00343,P2,2,8.0,Notifications,Email Not Received,-0.5,-0.866025,0.781831,0.62349,0,9,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00344,P4,4,48.0,Payments & Checkout,Card Declines,1.0,0.0,-0.974928,-0.222521,1,8,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00345,P3,3,24.0,Account Access,Login Failure,0.965926,-0.258819,-0.433884,-0.900969,0,7,1,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00346,P3,3,24.0,Payments & Checkout,Payout Delays,0.258819,-0.965926,-0.974928,-0.222521,1,3,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00347,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.965926,-0.258819,-0.974928,-0.222521,1,6,0,0,Advanced,Grocery,UK & Europe,0
+EXTTEST-00348,P3,3,24.0,Payments & Checkout,Payout Delays,0.258819,-0.965926,-0.781831,0.62349,1,10,0,0,Foundation,Fashion,UK & Europe,1
+EXTTEST-00349,P2,2,8.0,API Integrations,Rate Limiting,0.5,0.866025,0.433884,-0.900969,0,3,0,0,Advanced,Fashion,UK & Europe,0
+EXTTEST-00350,P3,3,24.0,Notifications,Email Not Received,0.5,0.866025,0.974928,-0.222521,0,12,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00351,P4,4,48.0,Payments & Checkout,Card Declines,0.707107,0.707107,-0.974928,-0.222521,1,12,0,1,Advanced,Grocery,North America,1
+EXTTEST-00352,P4,4,48.0,Account Access,Account Lockout,0.707107,-0.707107,0.0,1.0,0,5,0,1,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00353,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.707107,-0.707107,0.781831,0.62349,0,6,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00354,P2,2,8.0,Payments & Checkout,Payout Delays,-0.965926,0.258819,0.0,1.0,0,5,0,0,Foundation,Electronics,North America,1
+EXTTEST-00355,P3,3,24.0,API Integrations,Endpoint Timeout,-0.258819,0.965926,0.781831,0.62349,0,5,0,0,Advanced,Sporting Goods,North America,1
+EXTTEST-00356,P3,3,24.0,API Integrations,Endpoint Timeout,0.5,0.866025,-0.433884,-0.900969,0,6,0,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00357,P1,1,2.0,Account Access,MFA Issue,0.707107,-0.707107,-0.781831,0.62349,1,5,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00358,P4,4,48.0,API Integrations,Rate Limiting,-0.866025,0.5,-0.781831,0.62349,1,3,0,0,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00359,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.258819,0.965926,0.974928,-0.222521,0,5,0,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00360,P3,3,24.0,Payments & Checkout,Card Declines,0.258819,-0.965926,0.0,1.0,0,10,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00361,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,-0.258819,0.965926,0.974928,-0.222521,0,9,1,0,Advanced,Electronics,UK & Europe,1
+EXTTEST-00362,P3,3,24.0,Payments & Checkout,Refund Processing,-0.5,0.866025,-0.781831,0.62349,1,6,0,0,Foundation,Electronics,North America,0
+EXTTEST-00363,P3,3,24.0,API Integrations,Endpoint Timeout,0.258819,-0.965926,0.433884,-0.900969,0,10,1,0,Advanced,Sporting Goods,North America,0
+EXTTEST-00364,P4,4,48.0,API Integrations,Webhook Failures,-0.965926,0.258819,-0.974928,-0.222521,1,10,0,0,Foundation,Grocery,North America,0
+EXTTEST-00365,P3,3,24.0,Account Access,Login Failure,0.258819,0.965926,0.433884,-0.900969,0,6,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00366,P4,4,48.0,API Integrations,Authentication Error,-0.258819,0.965926,0.433884,-0.900969,0,4,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00367,P2,2,8.0,Fulfilment & Logistics,Label Generation,0.0,-1.0,0.781831,0.62349,0,11,0,0,Advanced,Grocery,North America,1
+EXTTEST-00368,P4,4,48.0,API Integrations,Webhook Failures,0.965926,0.258819,0.974928,-0.222521,0,6,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00369,P4,4,48.0,Fulfilment & Logistics,Order Status Error,0.866025,-0.5,0.433884,-0.900969,0,11,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00370,P4,4,48.0,Payments & Checkout,Payout Delays,0.0,1.0,0.781831,0.62349,0,10,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00371,P4,4,48.0,Account Access,MFA Issue,0.5,-0.866025,0.0,1.0,0,4,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00372,P3,3,24.0,Fulfilment & Logistics,Label Generation,-0.258819,-0.965926,0.0,1.0,0,7,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00373,P3,3,24.0,Payments & Checkout,Refund Processing,-0.5,0.866025,-0.974928,-0.222521,1,9,1,0,Foundation,Sporting Goods,UK & Europe,0
+EXTTEST-00374,P3,3,24.0,Payments & Checkout,Card Declines,-1.0,-0.0,0.974928,-0.222521,0,10,0,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00375,P4,4,48.0,Account Access,MFA Issue,0.258819,0.965926,0.0,1.0,0,11,1,0,Advanced,Electronics,UK & Europe,0
+EXTTEST-00376,P3,3,24.0,Notifications,Push Delivery Failure,-0.866025,0.5,0.0,1.0,0,10,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00377,P2,2,8.0,Notifications,Email Not Received,0.258819,0.965926,-0.974928,-0.222521,1,7,0,1,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00378,P3,3,24.0,Account Access,Account Lockout,-0.965926,0.258819,-0.433884,-0.900969,0,7,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00379,P3,3,24.0,Notifications,Push Delivery Failure,0.965926,0.258819,-0.781831,0.62349,1,5,0,0,Foundation,Fashion,North America,1
+EXTTEST-00380,P3,3,24.0,Account Access,MFA Issue,-0.258819,0.965926,0.0,1.0,0,1,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00381,P3,3,24.0,Notifications,SMS Delay,-0.866025,0.5,0.0,1.0,0,12,0,0,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00382,P3,3,24.0,API Integrations,Authentication Error,0.707107,0.707107,-0.974928,-0.222521,1,7,1,1,Foundation,Electronics,North America,0
+EXTTEST-00383,P3,3,24.0,Notifications,Email Not Received,0.965926,0.258819,-0.781831,0.62349,1,4,0,0,Foundation,Grocery,UK & Europe,0
+EXTTEST-00384,P1,1,2.0,Payments & Checkout,Payout Delays,-0.258819,-0.965926,-0.433884,-0.900969,0,9,1,0,Foundation,Electronics,North America,0
+EXTTEST-00385,P3,3,24.0,Account Access,MFA Issue,0.258819,0.965926,-0.433884,-0.900969,0,6,0,0,Foundation,Grocery,North America,0
+EXTTEST-00386,P2,2,8.0,Fulfilment & Logistics,Order Status Error,0.0,1.0,-0.433884,-0.900969,0,10,0,0,Advanced,Electronics,North America,1
+EXTTEST-00387,P4,4,48.0,Fulfilment & Logistics,Tracking Update Delay,0.5,0.866025,0.433884,-0.900969,0,5,0,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00388,P3,3,24.0,Payments & Checkout,Refund Processing,0.258819,0.965926,0.974928,-0.222521,0,3,0,0,Foundation,Electronics,Asia-Pacific,0
+EXTTEST-00389,P3,3,24.0,Payments & Checkout,3DS Authentication,-0.866025,-0.5,0.433884,-0.900969,0,11,0,1,Foundation,Sporting Goods,Asia-Pacific,1
+EXTTEST-00390,P4,4,48.0,Payments & Checkout,Card Declines,-0.258819,0.965926,0.781831,0.62349,0,9,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00391,P1,1,2.0,Fulfilment & Logistics,Carrier Sync Failure,-0.5,0.866025,0.433884,-0.900969,0,10,0,0,Advanced,Pharmaceuticals,UK & Europe,1
+EXTTEST-00392,P2,2,8.0,Account Access,Account Lockout,-0.866025,0.5,0.781831,0.62349,0,4,0,0,Advanced,Fashion,North America,0
+EXTTEST-00393,P3,3,24.0,API Integrations,Authentication Error,-0.707107,-0.707107,-0.433884,-0.900969,0,10,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00394,P4,4,48.0,Fulfilment & Logistics,Label Generation,1.0,0.0,-0.974928,-0.222521,1,9,0,0,Advanced,Sporting Goods,UK & Europe,0
+EXTTEST-00395,P3,3,24.0,Account Access,MFA Issue,-0.5,-0.866025,-0.974928,-0.222521,1,1,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00396,P3,3,24.0,Fulfilment & Logistics,Order Status Error,0.0,1.0,0.433884,-0.900969,0,10,1,1,Advanced,Home & Garden,North America,1
+EXTTEST-00397,P3,3,24.0,Account Access,Password Reset,0.5,-0.866025,-0.433884,-0.900969,0,1,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00398,P3,3,24.0,API Integrations,Rate Limiting,0.866025,-0.5,0.974928,-0.222521,0,12,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00399,P3,3,24.0,Notifications,SMS Delay,0.258819,-0.965926,0.433884,-0.900969,0,10,0,0,Advanced,Pharmaceuticals,UK & Europe,1
+EXTTEST-00400,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.965926,0.258819,0.781831,0.62349,0,9,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00401,P2,2,8.0,Account Access,Login Failure,0.707107,0.707107,0.0,1.0,0,7,0,0,Advanced,Electronics,UK & Europe,0
+EXTTEST-00402,P4,4,48.0,Payments & Checkout,Refund Processing,-0.707107,0.707107,-0.781831,0.62349,1,10,0,1,Foundation,Home & Garden,Asia-Pacific,1
+EXTTEST-00403,P3,3,24.0,Fulfilment & Logistics,Label Generation,-1.0,-0.0,-0.781831,0.62349,1,6,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00404,P4,4,48.0,API Integrations,Endpoint Timeout,-0.965926,0.258819,0.974928,-0.222521,0,10,0,0,Foundation,Sporting Goods,Asia-Pacific,0
+EXTTEST-00405,P2,2,8.0,Notifications,Push Delivery Failure,-0.5,0.866025,-0.781831,0.62349,1,7,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00406,P3,3,24.0,API Integrations,Rate Limiting,0.0,1.0,-0.974928,-0.222521,1,5,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00407,P2,2,8.0,Notifications,Template Error,-1.0,-0.0,0.781831,0.62349,0,4,0,0,Foundation,Fashion,North America,0
+EXTTEST-00408,P2,2,8.0,API Integrations,Webhook Failures,-0.707107,0.707107,0.433884,-0.900969,0,2,0,0,Advanced,Fashion,North America,0
+EXTTEST-00409,P4,4,48.0,Payments & Checkout,Payout Delays,0.707107,0.707107,0.433884,-0.900969,0,5,0,0,Advanced,Electronics,North America,0
+EXTTEST-00410,P3,3,24.0,Notifications,Template Error,1.0,0.0,-0.974928,-0.222521,1,2,0,1,Foundation,Electronics,North America,0
+EXTTEST-00411,P4,4,48.0,Fulfilment & Logistics,Order Status Error,-0.866025,-0.5,-0.781831,0.62349,1,7,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00412,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.707107,0.707107,0.0,1.0,0,3,1,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00413,P2,2,8.0,Notifications,Template Error,0.965926,-0.258819,-0.433884,-0.900969,0,3,0,0,Foundation,Electronics,UK & Europe,1
+EXTTEST-00414,P2,2,8.0,Account Access,Account Lockout,-0.258819,-0.965926,0.0,1.0,0,8,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00415,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.866025,-0.5,0.0,1.0,0,5,1,0,Foundation,Electronics,North America,0
+EXTTEST-00416,P3,3,24.0,Notifications,Template Error,0.5,0.866025,0.781831,0.62349,0,2,0,0,Advanced,Fashion,Asia-Pacific,0
+EXTTEST-00417,P1,1,2.0,Fulfilment & Logistics,Label Generation,-0.707107,-0.707107,0.433884,-0.900969,0,2,0,0,Advanced,Fashion,North America,1
+EXTTEST-00418,P3,3,24.0,Notifications,Push Delivery Failure,-0.707107,-0.707107,-0.974928,-0.222521,1,3,0,0,Advanced,Grocery,North America,0
+EXTTEST-00419,P4,4,48.0,Fulfilment & Logistics,Order Status Error,0.258819,-0.965926,-0.781831,0.62349,1,10,0,0,Advanced,Grocery,North America,0
+EXTTEST-00420,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,-0.707107,-0.707107,0.0,1.0,0,10,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00421,P4,4,48.0,Fulfilment & Logistics,Label Generation,0.5,-0.866025,-0.974928,-0.222521,1,6,0,0,Advanced,Fashion,North America,1
+EXTTEST-00422,P2,2,8.0,Notifications,Email Not Received,1.0,0.0,-0.781831,0.62349,1,7,0,0,Foundation,Grocery,North America,1
+EXTTEST-00423,P3,3,24.0,API Integrations,Endpoint Timeout,-0.707107,0.707107,0.781831,0.62349,0,8,0,0,Foundation,Electronics,North America,0
+EXTTEST-00424,P2,2,8.0,Notifications,Push Delivery Failure,0.707107,0.707107,0.974928,-0.222521,0,10,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00425,P2,2,8.0,Notifications,SMS Delay,-0.965926,0.258819,0.781831,0.62349,0,10,0,0,Foundation,Fashion,UK & Europe,0
+EXTTEST-00426,P4,4,48.0,Notifications,Template Error,-0.707107,-0.707107,-0.433884,-0.900969,0,7,1,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00427,P3,3,24.0,Notifications,Template Error,0.866025,-0.5,-0.781831,0.62349,1,7,1,0,Foundation,Electronics,North America,1
+EXTTEST-00428,P3,3,24.0,Fulfilment & Logistics,Label Generation,0.707107,-0.707107,-0.781831,0.62349,1,10,0,0,Advanced,Electronics,UK & Europe,1
+EXTTEST-00429,P2,2,8.0,Fulfilment & Logistics,Order Status Error,0.0,1.0,0.433884,-0.900969,0,10,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00430,P3,3,24.0,Payments & Checkout,Payout Delays,-0.866025,-0.5,0.974928,-0.222521,0,12,0,0,Advanced,Electronics,UK & Europe,0
+EXTTEST-00431,P3,3,24.0,Payments & Checkout,3DS Authentication,0.258819,-0.965926,0.781831,0.62349,0,6,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00432,P3,3,24.0,Notifications,Template Error,0.707107,-0.707107,-0.974928,-0.222521,1,7,0,0,Foundation,Home & Garden,North America,0
+EXTTEST-00433,P3,3,24.0,API Integrations,Rate Limiting,0.965926,0.258819,0.781831,0.62349,0,10,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00434,P4,4,48.0,API Integrations,Endpoint Timeout,-0.965926,-0.258819,0.974928,-0.222521,0,10,0,0,Foundation,Grocery,North America,0
+EXTTEST-00435,P3,3,24.0,API Integrations,Endpoint Timeout,0.707107,-0.707107,0.433884,-0.900969,0,11,1,0,Foundation,Sporting Goods,UK & Europe,1
+EXTTEST-00436,P2,2,8.0,API Integrations,Endpoint Timeout,-0.965926,0.258819,0.781831,0.62349,0,6,1,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00437,P4,4,48.0,Notifications,Push Delivery Failure,-0.5,-0.866025,-0.433884,-0.900969,0,7,0,0,Foundation,Grocery,North America,0
+EXTTEST-00438,P3,3,24.0,Account Access,Login Failure,1.0,0.0,-0.781831,0.62349,1,6,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00439,P3,3,24.0,Fulfilment & Logistics,Carrier Sync Failure,0.965926,-0.258819,0.0,1.0,0,2,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00440,P3,3,24.0,API Integrations,Endpoint Timeout,-0.5,0.866025,0.433884,-0.900969,0,10,0,0,Foundation,Fashion,Asia-Pacific,1
+EXTTEST-00441,P4,4,48.0,API Integrations,Authentication Error,0.965926,0.258819,0.433884,-0.900969,0,6,0,0,Foundation,Sporting Goods,UK & Europe,0
+EXTTEST-00442,P4,4,48.0,Payments & Checkout,Refund Processing,-0.965926,-0.258819,-0.781831,0.62349,1,8,0,0,Foundation,Electronics,North America,0
+EXTTEST-00443,P4,4,48.0,Payments & Checkout,Payout Delays,-0.965926,-0.258819,0.974928,-0.222521,0,7,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00444,P2,2,8.0,API Integrations,Authentication Error,-0.965926,-0.258819,0.781831,0.62349,0,1,0,1,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00445,P4,4,48.0,Payments & Checkout,Card Declines,0.707107,0.707107,-0.433884,-0.900969,0,7,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00446,P3,3,24.0,Account Access,Password Reset,-0.866025,0.5,0.433884,-0.900969,0,12,0,0,Advanced,Pharmaceuticals,North America,0
+EXTTEST-00447,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,1.0,0.0,-0.781831,0.62349,1,12,1,1,Foundation,Fashion,UK & Europe,1
+EXTTEST-00448,P3,3,24.0,API Integrations,Rate Limiting,1.0,0.0,-0.974928,-0.222521,1,3,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00449,P4,4,48.0,Payments & Checkout,Payout Delays,0.258819,0.965926,0.974928,-0.222521,0,4,0,0,Foundation,Fashion,North America,0
+EXTTEST-00450,P3,3,24.0,Payments & Checkout,Refund Processing,-1.0,-0.0,0.433884,-0.900969,0,10,0,0,Advanced,Fashion,North America,1
+EXTTEST-00451,P1,1,2.0,Notifications,SMS Delay,0.866025,-0.5,0.0,1.0,0,4,0,0,Advanced,Fashion,UK & Europe,1
+EXTTEST-00452,P3,3,24.0,Payments & Checkout,Payout Delays,0.965926,-0.258819,-0.974928,-0.222521,1,9,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00453,P1,1,2.0,API Integrations,Webhook Failures,-0.5,-0.866025,0.0,1.0,0,11,0,0,Advanced,Fashion,Asia-Pacific,1
+EXTTEST-00454,P3,3,24.0,Account Access,MFA Issue,0.0,-1.0,-0.974928,-0.222521,1,1,0,0,Foundation,Electronics,Asia-Pacific,1
+EXTTEST-00455,P4,4,48.0,Account Access,MFA Issue,0.5,0.866025,0.781831,0.62349,0,5,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00456,P3,3,24.0,Account Access,MFA Issue,0.707107,-0.707107,-0.433884,-0.900969,0,10,1,0,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00457,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.258819,0.965926,0.433884,-0.900969,0,4,0,0,Foundation,Grocery,North America,0
+EXTTEST-00458,P1,1,2.0,Fulfilment & Logistics,Carrier Sync Failure,0.5,0.866025,0.974928,-0.222521,0,10,0,0,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00459,P4,4,48.0,Payments & Checkout,Payout Delays,0.866025,0.5,0.974928,-0.222521,0,10,0,0,Foundation,Fashion,North America,0
+EXTTEST-00460,P2,2,8.0,Fulfilment & Logistics,Carrier Sync Failure,-0.258819,0.965926,-0.974928,-0.222521,1,9,0,0,Foundation,Home & Garden,UK & Europe,0
+EXTTEST-00461,P1,1,2.0,API Integrations,Endpoint Timeout,-0.965926,-0.258819,-0.974928,-0.222521,1,9,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00462,P3,3,24.0,Fulfilment & Logistics,Label Generation,-0.258819,0.965926,0.974928,-0.222521,0,11,0,0,Foundation,Grocery,North America,1
+EXTTEST-00463,P3,3,24.0,API Integrations,Rate Limiting,-0.965926,0.258819,-0.781831,0.62349,1,1,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00464,P2,2,8.0,Payments & Checkout,Card Declines,0.0,1.0,0.0,1.0,0,1,0,0,Foundation,Pharmaceuticals,North America,0
+EXTTEST-00465,P3,3,24.0,Payments & Checkout,Payout Delays,0.707107,-0.707107,-0.974928,-0.222521,1,4,0,0,Foundation,Home & Garden,North America,1
+EXTTEST-00466,P4,4,48.0,Fulfilment & Logistics,Carrier Sync Failure,0.965926,0.258819,0.781831,0.62349,0,8,0,0,Foundation,Pharmaceuticals,UK & Europe,1
+EXTTEST-00467,P3,3,24.0,Payments & Checkout,Payout Delays,0.5,0.866025,-0.781831,0.62349,1,6,1,0,Foundation,Sporting Goods,North America,1
+EXTTEST-00468,P4,4,48.0,API Integrations,Endpoint Timeout,0.0,-1.0,-0.781831,0.62349,1,11,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00469,P3,3,24.0,API Integrations,Authentication Error,0.258819,0.965926,0.433884,-0.900969,0,6,0,0,Foundation,Fashion,Asia-Pacific,0
+EXTTEST-00470,P2,2,8.0,Payments & Checkout,Payout Delays,-0.965926,-0.258819,0.433884,-0.900969,0,7,0,0,Advanced,Electronics,Asia-Pacific,1
+EXTTEST-00471,P4,4,48.0,Account Access,Account Lockout,-1.0,-0.0,-0.781831,0.62349,1,6,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00472,P4,4,48.0,Notifications,SMS Delay,-0.965926,-0.258819,-0.781831,0.62349,1,8,0,0,Foundation,Sporting Goods,North America,0
+EXTTEST-00473,P3,3,24.0,Account Access,Login Failure,0.0,-1.0,0.781831,0.62349,0,12,0,1,Advanced,Electronics,Asia-Pacific,0
+EXTTEST-00474,P4,4,48.0,Account Access,Password Reset,0.258819,-0.965926,0.433884,-0.900969,0,3,0,0,Foundation,Fashion,North America,1
+EXTTEST-00475,P4,4,48.0,Notifications,Template Error,0.965926,0.258819,-0.781831,0.62349,1,3,0,0,Advanced,Sporting Goods,Asia-Pacific,0
+EXTTEST-00476,P3,3,24.0,Payments & Checkout,Card Declines,0.965926,-0.258819,-0.974928,-0.222521,1,11,0,0,Advanced,Grocery,Asia-Pacific,1
+EXTTEST-00477,P3,3,24.0,API Integrations,Endpoint Timeout,-0.866025,-0.5,-0.974928,-0.222521,1,2,0,0,Foundation,Fashion,North America,0
+EXTTEST-00478,P1,1,2.0,Account Access,Account Lockout,0.0,-1.0,-0.433884,-0.900969,0,8,0,0,Foundation,Electronics,UK & Europe,0
+EXTTEST-00479,P3,3,24.0,API Integrations,Authentication Error,-0.965926,0.258819,-0.974928,-0.222521,1,3,0,0,Advanced,Home & Garden,North America,1
+EXTTEST-00480,P1,1,2.0,Notifications,Email Not Received,-0.965926,0.258819,0.433884,-0.900969,0,5,0,0,Foundation,Fashion,North America,1
+EXTTEST-00481,P3,3,24.0,Notifications,SMS Delay,0.707107,0.707107,0.0,1.0,0,2,0,0,Foundation,Grocery,Asia-Pacific,0
+EXTTEST-00482,P4,4,48.0,Account Access,MFA Issue,0.258819,0.965926,-0.433884,-0.900969,0,12,0,0,Advanced,Fashion,North America,0
+EXTTEST-00483,P3,3,24.0,Payments & Checkout,Card Declines,0.5,-0.866025,0.0,1.0,0,11,0,0,Foundation,Fashion,North America,0
+EXTTEST-00484,P3,3,24.0,Notifications,Email Not Received,-0.258819,0.965926,0.781831,0.62349,0,1,0,0,Foundation,Electronics,North America,0
+EXTTEST-00485,P4,4,48.0,Account Access,Login Failure,0.965926,0.258819,0.974928,-0.222521,0,11,0,0,Foundation,Grocery,UK & Europe,1
+EXTTEST-00486,P4,4,48.0,Notifications,Email Not Received,-1.0,-0.0,0.974928,-0.222521,0,3,0,0,Foundation,Home & Garden,Asia-Pacific,0
+EXTTEST-00487,P3,3,24.0,Notifications,SMS Delay,0.0,1.0,-0.974928,-0.222521,1,1,0,0,Foundation,Pharmaceuticals,UK & Europe,0
+EXTTEST-00488,P3,3,24.0,Fulfilment & Logistics,Tracking Update Delay,0.5,0.866025,0.433884,-0.900969,0,10,0,1,Foundation,Electronics,UK & Europe,1
+EXTTEST-00489,P3,3,24.0,API Integrations,Webhook Failures,0.5,0.866025,0.0,1.0,0,10,0,0,Foundation,Sporting Goods,Asia-Pacific,0
+EXTTEST-00490,P3,3,24.0,Payments & Checkout,Card Declines,0.707107,0.707107,0.433884,-0.900969,0,11,0,1,Foundation,Home & Garden,UK & Europe,1
+EXTTEST-00491,P3,3,24.0,API Integrations,Webhook Failures,-0.5,0.866025,0.0,1.0,0,4,0,0,Foundation,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00492,P4,4,48.0,Fulfilment & Logistics,Tracking Update Delay,-0.965926,0.258819,0.974928,-0.222521,0,4,0,1,Advanced,Home & Garden,Asia-Pacific,1
+EXTTEST-00493,P3,3,24.0,Account Access,MFA Issue,0.0,-1.0,-0.974928,-0.222521,1,8,0,0,Foundation,Pharmaceuticals,North America,1
+EXTTEST-00494,P3,3,24.0,Notifications,Email Not Received,-1.0,-0.0,0.781831,0.62349,0,6,0,0,Foundation,Electronics,Asia-Pacific,0
+EXTTEST-00495,P3,3,24.0,Payments & Checkout,Card Declines,0.965926,-0.258819,0.0,1.0,0,8,0,0,Foundation,Grocery,North America,0
+EXTTEST-00496,P3,3,24.0,Notifications,SMS Delay,-0.965926,0.258819,-0.433884,-0.900969,0,3,0,0,Foundation,Sporting Goods,UK & Europe,0
+EXTTEST-00497,P4,4,48.0,Account Access,Account Lockout,0.0,-1.0,-0.433884,-0.900969,0,4,0,0,Foundation,Pharmaceuticals,Asia-Pacific,0
+EXTTEST-00498,P3,3,24.0,Notifications,SMS Delay,0.866025,0.5,0.974928,-0.222521,0,12,1,0,Advanced,Pharmaceuticals,Asia-Pacific,1
+EXTTEST-00499,P3,3,24.0,Account Access,Account Lockout,1.0,0.0,-0.433884,-0.900969,0,9,0,0,Advanced,Electronics,Asia-Pacific,0
+EXTTEST-00500,P4,4,48.0,Fulfilment & Logistics,Carrier Sync Failure,-0.965926,-0.258819,-0.433884,-0.900969,0,8,0,0,Foundation,Electronics,North America,0

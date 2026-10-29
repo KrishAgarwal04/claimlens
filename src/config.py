@@ -39,6 +39,57 @@ SUPPORT_CATEGORIES = [
     "Account Access",
 ]
 
+# Canonical Subcategories Mapped by Operational Category
+CATEGORY_SUBCATEGORIES = {
+    "Payments & Checkout": [
+        "3DS Authentication",
+        "Card Declines",
+        "Payout Delays",
+        "Refund Processing",
+    ],
+    "API Integrations": [
+        "Authentication Error",
+        "Endpoint Timeout",
+        "Rate Limiting",
+        "Webhook Failures",
+    ],
+    "Notifications": [
+        "Email Delivery Failure",
+        "SMS Gateway Drag",
+        "Template Syntax Error",
+        "Webhook Retries",
+    ],
+    "Fulfilment & Logistics": [
+        "Carrier Sync Failure",
+        "Inventory Mismatch",
+        "Label Generation",
+        "Tracking Updates",
+    ],
+    "Account Access": [
+        "2FA Reset",
+        "Password Reset",
+        "SSO Failure",
+        "User Permissions",
+    ],
+}
+
+# Complete Flat List of Canonical Subcategories (20 items)
+CANONICAL_SUBCATEGORIES = sorted(
+    [sub for subs in CATEGORY_SUBCATEGORIES.values() for sub in subs]
+)
+
+# Canonical Merchant Reference Attributes
+MERCHANT_TIERS = ["Foundation", "Advanced"]
+MERCHANT_SECTORS = [
+    "Electronics",
+    "Fashion",
+    "Grocery",
+    "Home & Garden",
+    "Pharmaceuticals",
+    "Sporting Goods",
+]
+MERCHANT_REGIONS = ["Asia-Pacific", "North America", "UK & Europe"]
+
 # Random State
 RANDOM_STATE = 42
 

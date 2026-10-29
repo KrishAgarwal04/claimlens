@@ -1,0 +1,169 @@
+================================================================================
+OPSPILOT AI - EXTERNAL TEST DATASET EVALUATION REPORT
+================================================================================
+
+[IMPORTANT DISCLAIMER]
+This evaluation was performed on a SYNTHETIC EXTERNAL-STYLE test dataset
+("opspilot_external_test_synthetic.csv"). It is strictly an experimental simulation
+and NOT real-world external validation. The empirical metrics reported herein do NOT
+prove real-world generalization, as the data generation process exhibits substantial
+distributional shifts from operational baseline telemetry.
+
+--------------------------------------------------------------------------------
+1. MODEL ARTIFACT & INFERENCE PIPELINE SPECIFICATION
+--------------------------------------------------------------------------------
+Model Artifact Loaded:    models/sla_risk_model.joblib
+Metadata Specification:   models/model_metadata.json
+Base Classifier:          RandomForestClassifier (n_estimators=150, max_depth=6, min_samples_leaf=5, class_weight="balanced", random_state=42)
+Probability Calibration:  CalibratedClassifierCV (method="sigmoid", cv=5)
+Training Pipeline State:  Frozen / Immutable (No retraining, refitting, or recalibration)
+Target Task:              Resolution SLA Breach Prediction (1 = Breached, 0 = Resolved within Target)
+Standard Decision Cutoff: threshold = 0.50
+
+--------------------------------------------------------------------------------
+2. FEATURE SCHEMA VALIDATION & EXACT DERIVATIONS
+--------------------------------------------------------------------------------
+Total Required Pipeline Features: 18
+Numeric Features (12):
+  - priority_rank        [Direct match: present in test CSV]
+  - sla_target_hours     [Direct match: present in test CSV]
+  - is_reopen_child      [Direct match: present in test CSV]
+  - is_incident_ticket   [Direct match: present in test CSV]
+  - intake_hour          [Derived via exact mathematical inverse transform]
+  - intake_day_of_week   [Derived via exact mathematical inverse transform]
+  - intake_is_weekend    [Direct match: present in test CSV]
+  - intake_month         [Direct match: present in test CSV]
+  - intake_hour_sin      [Direct match: present in test CSV]
+  - intake_hour_cos      [Direct match: present in test CSV]
+  - intake_dow_sin       [Direct match: present in test CSV]
+  - intake_dow_cos       [Direct match: present in test CSV]
+Categorical Features (6):
+  - category             [Direct match: present in test CSV]
+  - sub_category         [Direct match: present in test CSV (9 out-of-vocabulary terms)]
+  - priority             [Direct match: present in test CSV]
+  - merchant_tier        [Direct match: present in test CSV]
+  - merchant_sector      [Direct match: present in test CSV]
+  - merchant_region      [Direct match: present in test CSV]
+
+Feature Derivation Details:
+  * intake_hour: Derived from (intake_hour_sin, intake_hour_cos) via exact circular transform:
+      intake_hour = round(arctan2(sin, cos) / (2 * pi) * 24.0) % 24
+      Verification: Maximum reconstruction error < 4.38e-07 across all 500 rows.
+  * intake_day_of_week: Derived from (intake_dow_sin, intake_dow_cos) via exact circular transform:
+      intake_day_of_week = round(arctan2(sin, cos) / (2 * pi) * 7.0) % 7
+      Verification: Maximum reconstruction error < 6.81e-07 across all 500 rows.
+      Cross-Check:  Derived day-of-week matches intake_is_weekend flag for 100.0% of rows.
+
+Field Isolation & Zero-Guesswork Protocol:
+  * Ground Truth Label: "actual_sla_breach" was strictly isolated as evaluation target (y_test)
+    and never passed to model input features.
+  * Ticket Identifier: "ticket_id" was isolated and excluded from model feature matrix.
+  * Out-of-Vocabulary Subcategories: 9 subcategories in the test CSV ("MFA Issue", "Push Delivery Failure",
+    "Account Lockout", "Email Not Received", "SMS Delay", "Template Error", "Tracking Update Delay",
+    "Order Status Error", "Login Failure") were unseen in training. In strict compliance with zero-guesswork
+    rules, no heuristic remapping was applied; OneHotEncoder(handle_unknown="ignore") naturally
+    represented these as all-zero categorical encodings.
+
+--------------------------------------------------------------------------------
+3. TEST DATASET LABEL DISTRIBUTION
+--------------------------------------------------------------------------------
+Total Evaluated Tickets:     500
+Class 0 (Within Target SLA): 262  (52.40%)
+Class 1 (Actual SLA Breach): 238  (47.60%)
+
+Predicted Class 0 (At threshold 0.50): 164  (32.80%)
+Predicted Class 1 (At threshold 0.50): 336  (67.20%)
+
+--------------------------------------------------------------------------------
+4. EVALUATION PERFORMANCE METRICS (At Threshold = 0.50)
+--------------------------------------------------------------------------------
+ROC-AUC Score:             0.5573
+PR-AUC (Avg Precision):    0.5441
+Accuracy:                  0.5320  (53.20%)
+Precision:                 0.5060  (50.60%)
+Recall (Sensitivity):      0.7143  (71.43%)
+F1-Score:                  0.5923
+Brier Score Loss:          0.3025
+
+Confusion Matrix (Threshold = 0.50):
+                      Predicted Within SLA (0)    Predicted Breach (1)    Total Actual
+Actual Within SLA (0)          96                          166                 262
+Actual Breach (1)              68                          170                 238
+Total Predicted               164                          336                 500
+
+Raw Confusion Matrix Counts:
+  - True Negatives (TN):  96
+  - False Positives (FP): 166
+  - False Negatives (FN): 68
+  - True Positives (TP):  170
+
+--------------------------------------------------------------------------------
+5. THRESHOLD SENSITIVITY ANALYSIS
+--------------------------------------------------------------------------------
+Threshold | Accuracy | Precision | Recall | F1-Score | TN  | FP  | FN  | TP
+----------+----------+-----------+--------+----------+-----+-----+-----+----
+  0.40    |  0.5480  |  0.5168   | 0.7773 |  0.6208  | 89  | 173 | 53  | 185
+  0.45    |  0.5540  |  0.5214   | 0.7689 |  0.6214  | 94  | 168 | 55  | 183
+  0.50    |  0.5320  |  0.5060   | 0.7143 |  0.5923  | 96  | 166 | 68  | 170
+  0.55    |  0.5380  |  0.5135   | 0.5588 |  0.5352  | 136 | 126 | 105 | 133
+  0.60    |  0.5360  |  0.5123   | 0.5252 |  0.5187  | 143 | 119 | 113 | 125
+
+--------------------------------------------------------------------------------
+6. ROOT-CAUSE DIAGNOSTICS & PERFORMANCE DIVERGENCE ANALYSIS
+--------------------------------------------------------------------------------
+While the calibrated SLA model achieved an internal holdout ROC-AUC of 0.8840 and
+PR-AUC of 0.9200 on 362 unseen historical tickets from the original operational
+distribution, its discrimination on this synthetic external test dataset is
+substantially lower (ROC-AUC 0.5573, PR-AUC 0.5441). Diagnostic decomposition
+reveals the exact reasons for this behavior:
+
+1. Severe Category Covariate Shift:
+   In the operational baseline dataset, ticket category was the single strongest
+   predictor of SLA breach risk:
+     * Payments & Checkout: 89.28% historical breach rate
+     * API Integrations:    77.80% historical breach rate
+     * Fulfilment:          59.87% historical breach rate
+     * Account Access:      24.44% historical breach rate
+     * Notifications:       18.10% historical breach rate
+   In this synthetic external test set, the empirical breach rates across categories
+   have been flattened to ~50%:
+     * Payments & Checkout: 50.00% breach rate (shift: -39.28 pp)
+     * Notifications:       50.52% breach rate (shift: +32.42 pp)
+     * API Integrations:    50.96% breach rate (shift: -26.84 pp)
+     * Fulfilment:          52.48% breach rate (shift:  -7.39 pp)
+     * Account Access:      31.82% breach rate (shift:  +7.38 pp)
+   Because the Random Forest classifier assigns high feature importance to category
+   one-hot columns (e.g. Payments & Checkout: 0.1773, Notifications: 0.1630), removing
+   the real-world category breach risk gradient eliminates the primary predictive signal.
+
+2. Out-of-Vocabulary Subcategory Shift (44.0% of Test Dataset):
+   220 of the 500 test tickets feature subcategories never encountered during training
+   (e.g., "Account Lockout", "Login Failure", "MFA Issue", "Email Not Received",
+   "Push Delivery Failure", "SMS Delay", "Template Error", "Tracking Update Delay",
+   "Order Status Error"). Under strict adherence to zero-leakage and zero-guesswork
+   rules, no manual mapping was fabricated; the pipeline's OneHotEncoder(handle_unknown="ignore")
+   correctly assigned zeros across all subcategory dummy columns for these tickets,
+   depriving the ensemble of secondary diagnostic features.
+
+3. Compression of Priority Risk Gradient:
+   In training, P1 and P2 tickets suffered acute breach rates (71.88% and 74.58%,
+   respectively), whereas P4 tickets had a 50.11% breach rate. In the synthetic test
+   set, P2 breaches drop sharply to 51.81%, and P4 breaches drop to 36.52%.
+
+--------------------------------------------------------------------------------
+7. CONCLUSION & LIMITATIONS
+--------------------------------------------------------------------------------
+1. Pipeline Integrity:
+   The existing model artifact (models/sla_risk_model.joblib) and metadata
+   (models/model_metadata.json) were loaded in read-only mode. Zero retraining,
+   zero refitting, and zero hyperparameter modifications took place.
+2. In-Distribution vs Out-of-Distribution Behavior:
+   The evaluation demonstrates expected statistical learning theory: models calibrated
+   on specific organizational operational workflows degrade gracefully towards random
+   chance when applied to synthetic test beds where domain-specific covariate
+   relationships have been fundamentally modified.
+3. Disclaimer Reiteration:
+   This evaluation does NOT represent real-world external validation. Real-world
+   generalization must be validated against actual telemetry from live external
+   merchant ticketing queues adhering to standard domain taxonomies.
+================================================================================
