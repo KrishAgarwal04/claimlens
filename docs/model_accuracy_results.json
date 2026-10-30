@@ -1,0 +1,80 @@
+{
+  "threshold": 0.5,
+  "model_sha256": "7003a6366b99abf98a0647b7bf10c8917e0e443eacfec121edd7cd709585afda",
+  "results": {
+    "historical_holdout": {
+      "samples": 362,
+      "decision_threshold": 0.5,
+      "accuracy": 0.8038674033149171,
+      "accuracy_95pct_wilson_interval": [
+        0.7598626931136261,
+        0.841490460819661
+      ],
+      "precision": 0.8044444444444444,
+      "recall": 0.8701923076923077,
+      "f1": 0.836027713625866,
+      "roc_auc": 0.8839910089910089,
+      "pr_auc": 0.9200064962612691,
+      "brier_score": 0.1389725861167413,
+      "always_predict_breach_accuracy": 0.574585635359116,
+      "confusion_matrix": {
+        "tn": 110,
+        "fp": 44,
+        "fn": 27,
+        "tp": 181
+      },
+      "matches_saved_metadata": true
+    },
+    "evaluation_tickets": {
+      "samples": 300,
+      "decision_threshold": 0.5,
+      "accuracy": 0.7366666666666667,
+      "accuracy_95pct_wilson_interval": [
+        0.6840594845533765,
+        0.7832892919143619
+      ],
+      "precision": 0.703125,
+      "recall": 0.8598726114649682,
+      "f1": 0.7736389684813754,
+      "roc_auc": 0.8585809095363236,
+      "pr_auc": 0.8786855340654951,
+      "brier_score": 0.16094122358100452,
+      "always_predict_breach_accuracy": 0.5233333333333333,
+      "confusion_matrix": {
+        "tn": 86,
+        "fp": 57,
+        "fn": 22,
+        "tp": 135
+      },
+      "feature_rows_matching_training": 0,
+      "ticket_ids_matching_historical": 0
+    },
+    "synthetic_canonical": {
+      "samples": 500,
+      "decision_threshold": 0.5,
+      "accuracy": 0.728,
+      "accuracy_95pct_wilson_interval": [
+        0.6873666188831685,
+        0.7651565550667395
+      ],
+      "precision": 0.7177914110429447,
+      "recall": 0.841726618705036,
+      "f1": 0.7748344370860927,
+      "roc_auc": 0.8140514615334759,
+      "pr_auc": 0.838780539352912,
+      "brier_score": 0.17372738242906646,
+      "always_predict_breach_accuracy": 0.556,
+      "confusion_matrix": {
+        "tn": 130,
+        "fp": 92,
+        "fn": 44,
+        "tp": 234
+      }
+    }
+  },
+  "limitations": [
+    "Holdout is reconstructed from the documented split; metadata agreement checks reproducibility.",
+    "All supplied datasets are synthetic; these scores do not establish real-world accuracy.",
+    "External labels are used only for scoring; no model fitting or threshold tuning is performed."
+  ]
+}

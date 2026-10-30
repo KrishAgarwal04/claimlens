@@ -5,14 +5,50 @@
 
 **Project**: OpsPilot AI  
 **Author**: Operational Intelligence & Systems Architecture Engineering  
-**Version**: 1.1.0 (Post-Leakage Model Retraining & Audit Release)  
+**Version**: 2.0.0 (Two-Stage Risk & Capacity-Constrained Decision Engine)
 **Date**: October 2026  
-**Repository Path**: `C:\Users\aryan\OneDrive\Desktop\OpsPilot-AI`  
+**Repository Path**: `C:\deviathon final`
 **License**: Enterprise Proprietary / Evaluation Benchmark  
 
 ---
 
 ## Executive Summary
+
+### Current implementation update
+
+The working prototype now starts on **AI Decision Engine** and adds a separately
+validated assignment-time model. The active compact profile achieves **85.36%
+accuracy on the original 362-ticket holdout**, **87.33% on the separate
+300-ticket evaluation**, and **88.80% on the 500-ticket v2 evaluation**. Its
+separate-set breach recall is **91.72%**, with **13 missed breaches**. The
+arrival-only model remains available at 80.39% and 73.67%; the assignment model
+uses additional information that becomes known when a candidate agent is specified.
+
+The compact profile is regularized logistic regression (C=0.01), selected using
+training CV near the requested 85% accuracy target. It replaces a stronger
+histogram-gradient-boosting profile by explicit user preference. Previous stronger
+artifacts and evaluation results are retained as backups; lower accuracy is not
+presented as improved predictive performance.
+
+The engine assigns work globally under explicit per-agent planning budgets,
+domain-specialty constraints and seniority rules. It exposes reasons for each
+assignment, flags capacity shortfalls and known overdue tickets, compares predicted
+impact against a capacity-matched specialist round-robin policy and exports plans.
+Budget inputs are scenario assumptions; estimated gains are not realized savings.
+
+**Workload Forecast** adds timestamp-only forecasts, count intervals, a separate
+rolling backtest and historical surge detection. Forecasts follow the dataset
+snapshot. The selected forecast matches its recent-mean baseline on this dataset;
+the final backtest MAE is reported explicitly rather than claimed as an improvement.
+
+The provided data already contains issue categories and subcategories, but no
+free-text ticket descriptions. Pattern summaries use these observed fields and
+operational evidence; the prototype does not claim unimplemented LLM classification.
+
+See [the current evaluation](EVALUATION_REPORT.md) and
+[verified assignment metrics](docs/assignment_accuracy_results.json). All datasets
+are synthetic; new real operational data is required for deployment validation.
+The original architecture description below documents the arrival-only baseline.
 
 **OpsPilot AI** is an enterprise-grade operations intelligence and automated decision platform engineered to optimize IT Service Management (ITSM) and merchant support operations. Modern B2B support organizations face mounting challenges: escalating ticket volumes, rigid Service Level Agreement (SLA) deadlines, severe specialist dispatch mismatches, and asymmetric global staffing coverage. 
 

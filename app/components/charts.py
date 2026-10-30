@@ -10,20 +10,20 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import Dict, Any, List, Optional
 
-# Enterprise SaaS Color Palette
+# Enterprise SaaS Color Palette (Cohesive Light Theme)
 CHART_COLORS = {
-    "primary": "#2563EB",       # Bright Blue
-    "primary_light": "#93C5FD", # Light Blue
-    "success": "#10B981",       # Emerald Green
-    "warning": "#F59E0B",       # Amber Orange
-    "danger": "#EF4444",        # Crimson Red
-    "purple": "#8B5CF6",        # Violet Purple
-    "teal": "#06B6D4",          # Cyan Teal
-    "navy": "#0F172A",          # Slate 900
-    "text": "#334155",          # Slate 700
-    "muted": "#64748B",         # Slate 500
-    "grid": "#F1F5F9",          # Slate 100
-    "border": "#E2E8F0",        # Slate 200
+    "primary": "#6C5478",       # Soft Slate Plum
+    "primary_light": "#F3EFF7", # Very Light Pastel Lavender
+    "success": "#16603E",       # Dark Bold Green
+    "warning": "#8A5310",       # Dark Bold Warm Amber
+    "danger": "#A32832",        # Dark Bold Crimson
+    "purple": "#6C5478",        # Soft Slate Plum
+    "teal": "#3B6E65",          # Dark Sage Teal
+    "navy": "#120A18",          # Deep Heading Black-Plum
+    "text": "#1A1322",          # Deep Dark High-Contrast Text
+    "muted": "#4A4252",         # High-Contrast Dark Slate Muted
+    "grid": "#F0EAF5",          # Very Light Subtle Grid
+    "border": "#E5DFE9",        # Soft Light Border
 }
 
 
@@ -87,7 +87,7 @@ def apply_chart_theme(
         plot_bgcolor="rgba(0,0,0,0)",
         height=height,
         font=dict(
-            family="Plus Jakarta Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            family="Inter, Manrope, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
             color=CHART_COLORS["text"],
             size=12,
         ),
@@ -95,7 +95,7 @@ def apply_chart_theme(
         hoverlabel=dict(
             bgcolor=CHART_COLORS["navy"],
             font_size=12,
-            font_family="Plus Jakarta Sans, sans-serif",
+            font_family="Inter, sans-serif",
             font_color="#FFFFFF",
             bordercolor=CHART_COLORS["navy"],
         ),
@@ -140,7 +140,7 @@ def create_volume_trend_chart(tickets_df: pd.DataFrame) -> go.Figure:
             mode="lines+markers",
             line=dict(color=CHART_COLORS["primary"], width=2.5),
             fill="tozeroy",
-            fillcolor="rgba(37, 99, 235, 0.08)",
+            fillcolor="rgba(108, 84, 120, 0.08)",
             marker=dict(size=5, color=CHART_COLORS["primary"]),
             hovertemplate="<b>%{x}</b><br>Historical Tickets: %{y:,}<extra></extra>",
         )
@@ -186,12 +186,12 @@ def create_category_distribution_chart(tickets_df: pd.DataFrame) -> go.Figure:
             orientation="h",
             marker=dict(
                 color=counts["count"],
-                colorscale=[[0, "#93C5FD"], [1, "#1D4ED8"]],
+                colorscale=[[0, "#F3EFF7"], [1, "#6C5478"]],
                 showscale=False,
             ),
             text=counts.apply(lambda r: f"{r['count']:,} ({r['pct']}%)", axis=1),
             textposition="auto",
-            textfont=dict(size=11, color="#FFFFFF", family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color="#FFFFFF", family="Inter, sans-serif"),
             hovertemplate="<b>%{y}</b><br>Tickets: %{x:,} (%{text})<extra></extra>",
         )
     )
@@ -225,7 +225,7 @@ def create_sla_breach_chart(historical_df: pd.DataFrame) -> go.Figure:
     grouped["rank"] = grouped["priority"].map(p_order)
     grouped = grouped.sort_values("rank")
 
-    bar_colors = ["#EF4444", "#F59E0B", "#3B82F6", "#64748B"]
+    bar_colors = ["#A32832", "#8A5310", "#6C5478", "#4A4252"]
 
     fig = go.Figure(
         go.Bar(
@@ -234,7 +234,7 @@ def create_sla_breach_chart(historical_df: pd.DataFrame) -> go.Figure:
             marker=dict(color=bar_colors),
             text=grouped["breach_rate_pct"].apply(lambda v: f"{v:.1f}%"),
             textposition="outside",
-            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>Priority %{x}</b><br>Breach Rate: %{y:.1f}%<extra></extra>",
         )
     )
@@ -273,9 +273,9 @@ def create_open_queue_risk_chart(triage_df: pd.DataFrame) -> go.Figure:
             "risk_tier": ["🔴 High (>=70%)", "🟡 Medium (40-70%)", "🟢 Low (<40%)"]
         },
         color_discrete_map={
-            "🔴 High (>=70%)": "#EF4444",
-            "🟡 Medium (40-70%)": "#F59E0B",
-            "🟢 Low (<40%)": "#10B981",
+            "🔴 High (>=70%)": "#A32832",
+            "🟡 Medium (40-70%)": "#8A5310",
+            "🟢 Low (<40%)": "#16603E",
         },
         labels={
             "breach_risk_pct": "Predicted SLA Breach Probability (%)",
@@ -306,10 +306,10 @@ def create_priority_chart(tickets_df: pd.DataFrame) -> go.Figure:
     p_counts.columns = ["priority", "count"]
 
     color_map = {
-        "P1": "#EF4444",
-        "P2": "#F59E0B",
-        "P3": "#3B82F6",
-        "P4": "#94A3B8",
+        "P1": "#A32832",
+        "P2": "#8A5310",
+        "P3": "#6C5478",
+        "P4": "#4A4252",
     }
 
     fig = go.Figure(
@@ -317,9 +317,9 @@ def create_priority_chart(tickets_df: pd.DataFrame) -> go.Figure:
             labels=p_counts["priority"],
             values=p_counts["count"],
             hole=0.55,
-            marker=dict(colors=[color_map.get(p, "#CBD5E1") for p in p_counts["priority"]]),
+            marker=dict(colors=[color_map.get(p, "#E5DFE9") for p in p_counts["priority"]]),
             textinfo="label+percent",
-            textfont=dict(size=11, family="Plus Jakarta Sans"),
+            textfont=dict(size=11, family="Inter, sans-serif"),
             hovertemplate="<b>%{label}</b><br>Tickets: %{value:,} (%{percent})<extra></extra>",
         )
     )
@@ -348,10 +348,10 @@ def create_sector_chart(merchants_df: pd.DataFrame, tickets_df: pd.DataFrame) ->
         go.Bar(
             x=s_counts["sector"],
             y=s_counts["count"],
-            marker=dict(color="#3B82F6"),
+            marker=dict(color="#6C5478"),
             text=s_counts["count"].apply(lambda v: f"{v:,}"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Tickets: %{y:,}<extra></extra>",
         )
     )
@@ -388,12 +388,12 @@ def create_feature_importance_chart(top_features: List[Dict[str, Any]]) -> go.Fi
             orientation="h",
             marker=dict(
                 color=df["importance"],
-                colorscale=[[0, "#93C5FD"], [1, "#1D4ED8"]],
+                colorscale=[[0, "#F3EFF7"], [1, "#6C5478"]],
                 showscale=False,
             ),
             text=df["importance"].apply(lambda v: f"{v*100:.1f}%"),
             textposition="auto",
-            textfont=dict(size=11, color="#FFFFFF", family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color="#FFFFFF", family="Inter, sans-serif"),
             hovertemplate="<b>%{y}</b><br>Importance: %{x:.4f} (%{text})<extra></extra>",
         )
     )
@@ -429,10 +429,10 @@ def create_bottleneck_mismatch_chart(historical_df: pd.DataFrame) -> go.Figure:
             name="Resolution Breach Rate (%)",
             x=comp["label"],
             y=comp["breach_pct"],
-            marker_color=["#10B981", "#EF4444"],
+            marker_color=["#16603E", "#A32832"],
             text=comp["breach_pct"].apply(lambda v: f"{v}%"),
             textposition="outside",
-            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Breach Rate: %{y}%<extra></extra>",
         )
     )
@@ -474,10 +474,10 @@ def create_agent_tier_performance_chart(historical_df: pd.DataFrame, agents_df: 
         go.Bar(
             x=tier_perf["tier"],
             y=tier_perf["breach_pct"],
-            marker_color=["#EF4444", "#F59E0B", "#10B981"],
+            marker_color=["#A32832", "#8A5310", "#16603E"],
             text=tier_perf["breach_pct"].apply(lambda v: f"{v}%"),
             textposition="outside",
-            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>Tier %{x}</b><br>Breach Rate: %{y}%<extra></extra>",
         )
     )
@@ -507,7 +507,7 @@ def create_category_bottleneck_comparison_chart(cat_df: pd.DataFrame) -> go.Figu
             marker_color=CHART_COLORS["danger"],
             text=(cat_df["breach_rate"] * 100).round(1).apply(lambda v: f"{v:.1f}%"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Breach Rate: %{y:.1f}%<extra></extra>",
         )
     )
@@ -520,7 +520,7 @@ def create_category_bottleneck_comparison_chart(cat_df: pd.DataFrame) -> go.Figu
             marker_color=CHART_COLORS["primary"],
             text=cat_df["avg_resolution_hours"].round(1).apply(lambda v: f"{v:.1f}h"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Avg Resolution: %{y:.1f} hrs<extra></extra>",
         )
     )
@@ -556,7 +556,7 @@ def create_priority_sla_performance_chart(prio_df: pd.DataFrame) -> go.Figure:
             marker_color=CHART_COLORS["primary"],
             text=prio_df["mean_resolution_hours"].round(1).apply(lambda v: f"{v:.1f}h"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Actual Mean: %{y:.1f} hrs<extra></extra>",
         )
     )
@@ -569,7 +569,7 @@ def create_priority_sla_performance_chart(prio_df: pd.DataFrame) -> go.Figure:
             marker_color=CHART_COLORS["muted"],
             text=prio_df["target_resolution_hours"].apply(lambda v: f"{v:.0f}h"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Target SLA: %{y:.0f} hrs<extra></extra>",
         )
     )
@@ -603,7 +603,7 @@ def create_shift_region_coverage_chart(shift_df: pd.DataFrame) -> go.Figure:
             marker_color=CHART_COLORS["primary"],
             text=shift_df["ticket_pct"].apply(lambda v: f"{v:.1f}%"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Ticket Share: %{y:.1f}%<extra></extra>",
         )
     )
@@ -616,7 +616,7 @@ def create_shift_region_coverage_chart(shift_df: pd.DataFrame) -> go.Figure:
             marker_color=CHART_COLORS["warning"],
             text=shift_df["agent_pct"].apply(lambda v: f"{v:.1f}%"),
             textposition="outside",
-            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Plus Jakarta Sans"),
+            textfont=dict(size=10.5, color=CHART_COLORS["navy"], family="Inter, sans-serif"),
             hovertemplate="<b>%{x}</b><br>Agent Share: %{y:.1f}%<extra></extra>",
         )
     )
@@ -653,12 +653,12 @@ def create_top_bottlenecks_bar_chart(ranked_df: pd.DataFrame) -> go.Figure:
             orientation="h",
             marker=dict(
                 color=top_df["breach_rate"] * 100,
-                colorscale=[[0, "#93C5FD"], [0.5, "#F59E0B"], [1, "#EF4444"]],
+                colorscale=[[0, "#F3EFF7"], [0.5, "#8A5310"], [1, "#A32832"]],
                 showscale=False,
             ),
             text=top_df.apply(lambda r: f"Score: {r['bottleneck_score']:.1f} | N={r['sample_size']} ({r['breach_rate']*100:.1f}%)", axis=1),
             textposition="auto",
-            textfont=dict(size=10.5, color="#0F172A", family="Plus Jakarta Sans"),
+            textfont=dict(size=11, color="#120A18", family="Inter, sans-serif"),
             hovertemplate="<b>%{y}</b><br>Bottleneck Score: %{x:.2f}<br>Sample Size: %{customdata[0]}<br>Breach Rate: %{customdata[1]:.1%}<extra></extra>",
             customdata=top_df[["sample_size", "breach_rate"]].values,
         )
@@ -691,9 +691,9 @@ def create_agent_dispatch_distribution_chart(routed_df: pd.DataFrame) -> go.Figu
     counts = counts.sort_values("ticket_count", ascending=True)
 
     tier_colors = {
-        "L1": "#93C5FD",  # Light blue
-        "L2": "#2563EB",  # Brand blue
-        "L3": "#7C3AED",  # Purple
+        "L1": "#EDE7F3",  # Very Light Lavender
+        "L2": "#AEA0B6",  # Muted Purple
+        "L3": "#6C5478",  # Soft Slate Plum
     }
 
     fig = go.Figure()
@@ -706,10 +706,10 @@ def create_agent_dispatch_distribution_chart(routed_df: pd.DataFrame) -> go.Figu
                     y=subset["recommended_agent_name"],
                     name=f"Tier {tier}",
                     orientation="h",
-                    marker_color=tier_colors.get(tier, "#64748B"),
+                    marker_color=tier_colors.get(tier, "#4A4252"),
                     text=subset["ticket_count"],
                     textposition="auto",
-                    textfont=dict(size=10, family="Plus Jakarta Sans"),
+                    textfont=dict(size=10, family="Inter, sans-serif"),
                     hovertemplate="<b>%{y}</b> (Tier " + tier + ")<br>Assigned Tickets: %{x}<extra></extra>",
                 )
             )

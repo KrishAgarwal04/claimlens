@@ -1,0 +1,224 @@
+{
+  "stage": "assignment_time",
+  "display_name": "Assignment-aware SLA risk",
+  "selected_model": "hist_leaves8_l23.0",
+  "decision_threshold": 0.5,
+  "train_samples": 1445,
+  "test_samples": 362,
+  "feature_columns": [
+    "priority_rank",
+    "sla_target_hours",
+    "is_reopen_child",
+    "is_incident_ticket",
+    "intake_hour",
+    "intake_day_of_week",
+    "intake_is_weekend",
+    "intake_month",
+    "intake_hour_sin",
+    "intake_hour_cos",
+    "intake_dow_sin",
+    "intake_dow_cos",
+    "category",
+    "sub_category",
+    "priority",
+    "merchant_tier",
+    "merchant_sector",
+    "merchant_region",
+    "proposed_agent_efficiency",
+    "proposed_agent_tier_rank",
+    "domain_match",
+    "region_match",
+    "priority_capability_gap",
+    "proposed_agent_tier",
+    "proposed_agent_specialty",
+    "proposed_agent_region"
+  ],
+  "training_cv": {
+    "hist_leaves4_l23.0": {
+      "accuracy": 0.8885813148788927,
+      "roc_auc": 0.9552954584619242,
+      "brier_score": 0.08409613811765157,
+      "threshold": 0.475
+    },
+    "hist_leaves4_l215.0": {
+      "accuracy": 0.8802768166089966,
+      "roc_auc": 0.9513075133551612,
+      "brier_score": 0.08883515004791405,
+      "threshold": 0.5
+    },
+    "hist_leaves8_l23.0": {
+      "accuracy": 0.8961937716262975,
+      "roc_auc": 0.9578607460091175,
+      "brier_score": 0.07922308596487253,
+      "threshold": 0.5
+    },
+    "hist_leaves8_l215.0": {
+      "accuracy": 0.8934256055363322,
+      "roc_auc": 0.956053295317469,
+      "brier_score": 0.0818379711178195,
+      "threshold": 0.475
+    },
+    "hist_leaves15_l23.0": {
+      "accuracy": 0.8858131487889274,
+      "roc_auc": 0.9550585120548933,
+      "brier_score": 0.08295315424321115,
+      "threshold": 0.5
+    },
+    "hist_leaves15_l215.0": {
+      "accuracy": 0.8858131487889274,
+      "roc_auc": 0.9541831811132172,
+      "brier_score": 0.08329624413208826,
+      "threshold": 0.45
+    },
+    "gradient_depth2_trees120": {
+      "accuracy": 0.8809688581314878,
+      "roc_auc": 0.9509804881487632,
+      "brier_score": 0.09347178508117848,
+      "threshold": 0.525
+    },
+    "gradient_depth2_trees250": {
+      "accuracy": 0.8927335640138409,
+      "roc_auc": 0.9552249620102455,
+      "brier_score": 0.08261583370673221,
+      "threshold": 0.475
+    },
+    "gradient_depth3_trees120": {
+      "accuracy": 0.8913494809688581,
+      "roc_auc": 0.9553972866699044,
+      "brier_score": 0.08305998611088455,
+      "threshold": 0.55
+    },
+    "gradient_depth3_trees250": {
+      "accuracy": 0.8927335640138409,
+      "roc_auc": 0.9549929111901367,
+      "brier_score": 0.08072054760772211,
+      "threshold": 0.475
+    },
+    "random_forest": {
+      "accuracy": 0.8837370242214533,
+      "roc_auc": 0.949565663528269,
+      "brier_score": 0.09040810288538421,
+      "threshold": 0.55
+    },
+    "logistic_C0.1": {
+      "accuracy": 0.8865051903114187,
+      "roc_auc": 0.9472118653361116,
+      "brier_score": 0.09113332928235965,
+      "threshold": 0.425
+    },
+    "logistic_C1.0": {
+      "accuracy": 0.8927335640138409,
+      "roc_auc": 0.9497928187614557,
+      "brier_score": 0.08628205853125022,
+      "threshold": 0.45
+    },
+    "logistic_C10.0": {
+      "accuracy": 0.889273356401384,
+      "roc_auc": 0.9487549543339652,
+      "brier_score": 0.08777304749341064,
+      "threshold": 0.375
+    }
+  },
+  "evaluation": {
+    "historical_holdout": {
+      "samples": 362,
+      "decision_threshold": 0.5,
+      "accuracy": 0.9116022099447514,
+      "accuracy_95pct_wilson_interval": [
+        0.877871474391519,
+        0.9366887068453877
+      ],
+      "precision": 0.9150943396226415,
+      "recall": 0.9326923076923077,
+      "f1": 0.9238095238095239,
+      "roc_auc": 0.9747127872127872,
+      "pr_auc": 0.980935787558985,
+      "brier_score": 0.06374377756172214,
+      "always_predict_breach_accuracy": 0.574585635359116,
+      "confusion_matrix": {
+        "tn": 136,
+        "fp": 18,
+        "fn": 14,
+        "tp": 194
+      }
+    },
+    "separate_evaluation": {
+      "samples": 300,
+      "decision_threshold": 0.5,
+      "accuracy": 0.8866666666666667,
+      "accuracy_95pct_wilson_interval": [
+        0.8457997619361538,
+        0.917755985532264
+      ],
+      "precision": 0.8554913294797688,
+      "recall": 0.9426751592356688,
+      "f1": 0.896969696969697,
+      "roc_auc": 0.974165961427108,
+      "pr_auc": 0.9771778152557866,
+      "brier_score": 0.06835658492816188,
+      "always_predict_breach_accuracy": 0.5233333333333333,
+      "confusion_matrix": {
+        "tn": 118,
+        "fp": 25,
+        "fn": 9,
+        "tp": 148
+      }
+    }
+  },
+  "top_features": [
+    {
+      "feature": "category",
+      "importance": 0.20955200810448102
+    },
+    {
+      "feature": "proposed_agent_efficiency",
+      "importance": 0.06862209463234803
+    },
+    {
+      "feature": "proposed_agent_tier_rank",
+      "importance": 0.0239149421145803
+    },
+    {
+      "feature": "domain_match",
+      "importance": 0.01850238121347895
+    },
+    {
+      "feature": "priority_rank",
+      "importance": 0.01813717042908843
+    },
+    {
+      "feature": "is_reopen_child",
+      "importance": 0.009060099530545837
+    },
+    {
+      "feature": "proposed_agent_specialty",
+      "importance": 0.0069876344001796875
+    },
+    {
+      "feature": "priority_capability_gap",
+      "importance": 0.005928882135154782
+    },
+    {
+      "feature": "sub_category",
+      "importance": 0.0030502770249453506
+    },
+    {
+      "feature": "proposed_agent_tier",
+      "importance": 0.002277753408634009
+    },
+    {
+      "feature": "priority",
+      "importance": 0.001984344565768089
+    },
+    {
+      "feature": "merchant_sector",
+      "importance": 0.0019285348748557807
+    }
+  ],
+  "protocol": "Fixed original 80/20 stratified split, random_state=42. Model and threshold chosen using five-fold CV on 1445 training rows. Test labels never fit models.",
+  "limitations": [
+    "Agent attributes are available only once an assignment is specified; not an arrival-only forecast.",
+    "Scores for alternative assignments are observational scenario estimates, not proven causal improvements.",
+    "All datasets are synthetic and have been assessed previously; confirm on new real operational data."
+  ]
+}

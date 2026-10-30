@@ -1,4 +1,126 @@
-# OpsPilot AI — SLA Risk Prediction Model Evaluation Report
+# OpsPilot AI - Current Decision Engine Evaluation
+
+## Active compact assignment model
+
+The active artifact is **regularized logistic regression, C=0.01**, with a fixed
+classification threshold of **0.5**. It was selected from seven small candidates
+using five-fold cross-validation on the original 1,445 training tickets. Selection
+targeted accuracy nearest **85%** within the user's requested 80%-90% CV band.
+Training-CV accuracy is **85.26%**. Test datasets did not fit the model or select
+its parameters or threshold; previous evaluations of those datasets were known.
+
+| Dataset | Tickets | Active accuracy | Breach precision | Breach recall | False alarms | Missed breaches |
+|---|---:|---:|---:|---:|---:|---:|
+| Original holdout | 362 | **85.36%** | 87.08% | 87.50% | 27 | 26 |
+| Separate evaluation | 300 | **87.33%** | 85.21% | 91.72% | 25 | 13 |
+| evaluation_tickets_v2.csv | 500 | **88.80%** | 90.75% | 90.14% | 27 | 29 |
+
+The v2 model correctly classified **444/500** tickets. Its approximate 95%
+accuracy interval is **85.73%-91.27%**. The input file and evaluation labels
+were unchanged, and no rows were excluded. The arrival-only model is unchanged.
+The compact model intentionally has lower predictive performance than the
+previous full model; the requested range is not guaranteed on future datasets.
+
+Current reports: [assignment evaluation](docs/assignment_accuracy_results.json),
+[v2 evaluation](docs/evaluation_v2_results.json),
+[v2 predictions](docs/evaluation_v2_predictions.csv).
+
+The previous stronger model and benchmarks were preserved. The sections below
+are **archived full-profile results**, not the active compact model's scores.
+
+## Archived full profile: evaluation_tickets_v2.csv
+
+Both saved models were evaluated on all **500 completed tickets** in the supplied
+file, using their saved **0.5 thresholds**. No retraining, recalibration,
+threshold selection or row exclusion was performed; both model artifact hashes
+and the input file hash remained unchanged.
+
+| Model stage | Accuracy | Breach precision | Breach recall | F1 | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Arrival only | 79.00% | 78.90% | 87.76% | 0.8309 | 0.8783 |
+| Proposed assignment known | **92.80%** | **91.88%** | **96.26%** | **0.9402** | **0.9777** |
+
+The assignment-aware model correctly classified **464/500** tickets: **283**
+detected breaches, **181** correctly predicted non-breaches, **25** false alarms
+and **11** missed breaches. Its approximate 95% accuracy interval is
+**90.19%-94.75%**. The arrival-only model correctly classified **395/500** tickets.
+
+The file contains **294 actual breaches** and **206 non-breaches**. Audit checks
+found no duplicate ticket IDs, unknown merchants or agents, inconsistent SLA
+labels, or ticket-ID overlap with the historical data or previous evaluation
+file. All 500 creation timestamps occur after the original historical period.
+The evaluation assumes the repository's merchant and agent directories apply
+to this supplied dataset. The assignment-aware stage uses the specified agent;
+its extra information is unavailable at arrival-only prediction time.
+
+Archived details: [full v2 metrics and audit](docs/evaluation_v2_results_high_accuracy.json),
+[per-ticket predictions](docs/evaluation_v2_predictions_high_accuracy.csv).
+
+Evaluate whichever model is currently active with the supplied file's path:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.models.evaluate_dataset --dataset evaluation_tickets_v2.csv --name evaluation_v2
+```
+
+## Archived full-profile assignment-time benchmark
+
+The current prototype has two prediction stages. The new assignment-time model
+uses a specified or proposed agent's directory attributes before work starts.
+The original arrival-only model remains available when no agent is known.
+
+| Dataset | Arrival-only accuracy | Assignment-time accuracy | Assignment-time breach recall | Assignment-time ROC-AUC |
+|---|---:|---:|---:|---:|
+| Original 362-ticket holdout | 80.39% | **91.16%** | 93.27% | 0.9747 |
+| Separate 300-ticket evaluation | 73.67% | **88.67%** | 94.27% | 0.9742 |
+
+The assignment model correctly classified **330/362** holdout tickets and
+**266/300** separate evaluation tickets. On the separate set it missed **9**
+breaches and raised **25** false alarms, compared with 22 and 57 respectively
+for the arrival-only model. Approximate 95% accuracy intervals are **87.79%-93.67%**
+and **84.58%-91.78%**.
+
+**Model:** histogram gradient boosting, 200 iterations, eight leaves, L2=3;
+classification threshold 0.5. Fourteen configurations were compared using
+five-fold CV on the original **1,445 training tickets**. The 362 holdout cases
+and 300 separate evaluation cases did not fit the model or select its threshold.
+
+**Feature timing:** 18 intake attributes plus eight proposed-agent attributes and
+match indicators. Domain match is derived from the ticket category and directory
+specialty. Neither the observed `category_mismatch` field nor response timestamps,
+resolution times, resolution labels, CSAT or post-resolution reopen outcomes are
+input features. The efficiency field is the supplied persistent directory rating.
+
+**Interpretation:** this is an expansion of the available decision-time information,
+not a like-for-like improvement of arrival-only prediction. All datasets are
+synthetic and have been assessed previously; these scores do not establish
+real-world accuracy or a perfect model. Alternative assignment risks are
+observational scenario estimates, not demonstrated causal savings.
+
+**Working prototype:** the default AI Decision Engine view provides global,
+capacity-constrained specialist assignment, ticket-level explanations and CSV
+export. P1/P2 require L2/L3 specialists. Operator-supplied budgets are scenario
+inputs, not fabricated live availability. Already-overdue tickets are identified
+from the dataset snapshot and treated as existing breaches.
+
+The Workload Forecast view compares recent-mean, weekday and adaptive forecasts
+using earlier validation windows, then reports a final 28-day rolling backtest.
+For this dataset the selected recent-mean method matches the baseline MAE of
+**10.28 tickets/day**; an abrupt synthetic intake surge limits forecast accuracy.
+The view exposes that limitation rather than claiming a forecast improvement.
+
+Reproduce the saved model's scores without retraining:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.models.evaluate_assignment
+```
+
+Archived artifacts: [saved full-profile model](models/baseline/assignment_risk_high_accuracy.joblib),
+[full-profile metadata](models/baseline/assignment_high_accuracy_metadata.json),
+[verified full-profile metrics and hash](docs/assignment_accuracy_results_high_accuracy.json).
+
+---
+
+## Earlier arrival-only evaluation
 
 **Evaluation Target**: `evaluation_tickets.csv`  
 **Evaluation Mode**: Strictly Read-Only (Zero Retraining / Zero Recalibration / Zero Pipeline Mutation)  

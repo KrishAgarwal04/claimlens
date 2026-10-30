@@ -6,6 +6,8 @@ Clean, light-themed SaaS design for national hackathon operations intelligence.
 
 from typing import Tuple, Dict, Any
 from pathlib import Path
+import hashlib
+import json
 import sys
 import pandas as pd
 import numpy as np
@@ -19,6 +21,17 @@ if str(ROOT_DIR) not in sys.path:
 from src.pipeline.loader import DataLoader
 from src.pipeline.features import FeatureEngineer
 from src.models.sla_model import SLARiskModel
+from src.models.assignment_risk import AssignmentRiskModel
+from app.decision_views import render_decision_engine, render_workload
+from app.agent_views import (
+    prepare_agent_workspace_data,
+    render_my_workspace,
+    render_my_tickets,
+    render_agent_profile,
+    get_active_agent,
+    render_agent_workspace,
+)
+from app.supervisor_views import render_supervisor_workspace
 from src.analytics import BottleneckDetector
 from src.routing import AgentRecommender
 from src.simulation import ImpactSimulator
@@ -90,6 +103,11 @@ def get_sla_model():
         model.save()
         return model
 
+
+@st.cache_resource(max_entries=2)
+def get_assignment_model(artifact_version):
+    return AssignmentRiskModel.load()
+
 # Load data with loading state handling
 try:
     tickets, agents, merchants, hist_tickets, open_tickets, diagnostics = load_operational_data()
@@ -137,20 +155,33 @@ if data_loaded:
     # Day 5: Counterfactual Impact Simulator
     impact_simulator = ImpactSimulator(hist_tickets, agents, merchants, hourly_capacity_value=45.0)
 
+    # Agent Workspace Enriched Data Pipeline
+    agent_queue_df = prepare_agent_workspace_data(
+        triage_df=triage_df,
+        agents=agents,
+        merchants=merchants,
+        agent_recommender=agent_recommender,
+        bottleneck_detector=bottleneck_detector,
+    )
+
 # 5. Left Sidebar Navigation & Telemetry
 with st.sidebar:
     st.markdown(
         """
-        <div style="padding: 4px 0 10px 0; border-bottom: 1px solid #E2E8F0; margin-bottom: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.35rem;">⚡</span>
-                <span style="font-size: 1.2rem; font-weight: 800; color: #0F172A; letter-spacing: -0.02em;">OpsPilot AI</span>
+        <div class="sidebar-brand-box" style="padding-bottom: 20px; border-bottom: 1px solid #E5DCE9; margin-bottom: 22px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #EAE0EF 0%, #D8CEE2 100%); display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 1px 3px rgba(48, 40, 58, 0.06); flex-shrink: 0;">
+                    ⚡
+                </div>
+                <div style="font-size: 20px; font-weight: 800; color: #30283A; letter-spacing: -0.025em; font-family: 'Manrope', 'Inter', sans-serif; line-height: 1.15;">
+                    OpsPilot AI
+                </div>
             </div>
-            <div style="font-size: 0.735rem; color: #64748B; margin-top: 2px;">
+            <div style="font-size: 11.5px; font-weight: 600; color: #817889; margin-top: 6px; line-height: 1.35;">
                 Business Operations & SLA Intelligence
             </div>
-            <div style="margin-top: 6px;">
-                <span style="background-color: #EFF6FF; color: #1D4ED8; font-size: 0.675rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; border: 1px solid #DBEAFE;">
+            <div style="margin-top: 10px;">
+                <span style="background-color: #EAE0EF; color: #765184; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 9999px; border: 1px solid #D8CEE2; letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; line-height: 1.3;">
                     ENTERPRISE v0.2.0
                 </span>
             </div>
@@ -159,45 +190,54 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+    NAV_OPTIONS = [
+        "My Workspace",
+        "My Tickets",
+        "Supervisor View",
+        "Agent Profile",
+    ]
+
     mode = st.radio(
         "Navigation",
-        [
-            "1. Executive Overview",
-            "2. SLA Risk Predictor (Pre-Assignment)",
-            "3. Operational Bottlenecks",
-            "4. Smart Agent Recommendation",
-            "5. What-If Impact Simulator",
-        ],
+        NAV_OPTIONS,
         index=0,
     )
 
-    st.markdown("<hr style='margin: 8px 0; border: none; border-top: 1px solid #E2E8F0;'>", unsafe_allow_html=True)
-
     # Telemetry card in sidebar
-    meta_holdout = sla_model.metadata.get("holdout_results", {}).get("calibrated_selected_model", {}) if data_loaded else {}
-    roc_telemetry = f"{meta_holdout.get('roc_auc', 0.8840):.4f}"
-    pr_telemetry = f"{meta_holdout.get('pr_auc', 0.9200):.4f}"
+    holdout_metrics = sla_model.metadata.get("holdout_results", {}) if data_loaded else {}
+    meta_holdout = holdout_metrics.get("selected_model", holdout_metrics.get("calibrated_selected_model", {}))
+    active_model_name = sla_model.metadata.get("model_display_name", "Calibrated RF") if data_loaded else "Unavailable"
+    roc_telemetry = f"{meta_holdout.get('roc_auc', 0):.4f}"
+    pr_telemetry = f"{meta_holdout.get('pr_auc', 0):.4f}"
 
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 12px;">
-            <div style="font-size: 0.68rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">
-                SYSTEM TELEMETRY
+        <div class="sidebar-telemetry-card" style="background-color: #FFFFFF; border: 1px solid #E5DCE9; border-radius: 12px; padding: 15px 16px; margin-top: 24px; box-shadow: 0 1px 4px rgba(48, 40, 58, 0.03);">
+            <div style="font-size: 11px; font-weight: 800; color: #817889; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>SYSTEM TELEMETRY</span>
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #16603E;"></span>
             </div>
-            <div style="font-size: 0.775rem; color: #334155; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>Active Model:</span> <b style="color: #0F172A;">Calibrated RF</b>
-            </div>
-            <div style="font-size: 0.775rem; color: #334155; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>Holdout ROC-AUC:</span> <b style="color: #047857;">{roc_telemetry}</b>
-            </div>
-            <div style="font-size: 0.775rem; color: #334155; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>Holdout PR-AUC:</span> <b style="color: #047857;">{pr_telemetry}</b>
-            </div>
-            <div style="font-size: 0.775rem; color: #334155; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>Target Leakage:</span> <b style="color: #047857;">0% (Verified)</b>
-            </div>
-            <div style="font-size: 0.775rem; color: #334155; display: flex; justify-content: space-between;">
-                <span>Queue Status:</span> <b style="color: #B45309;">250 Pending</b>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                    <span style="color: #817889; font-weight: 600;">Arrival Model</span>
+                    <span style="color: #30283A; font-weight: 700; text-align: right; word-break: break-word;">{active_model_name}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                    <span style="color: #817889; font-weight: 600;">Holdout ROC-AUC</span>
+                    <span style="color: #16603E; font-weight: 700; font-family: 'JetBrains Mono', 'SF Mono', monospace;">{roc_telemetry}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                    <span style="color: #817889; font-weight: 600;">Holdout PR-AUC</span>
+                    <span style="color: #16603E; font-weight: 700; font-family: 'JetBrains Mono', 'SF Mono', monospace;">{pr_telemetry}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                    <span style="color: #817889; font-weight: 600;">Target Leakage</span>
+                    <span style="color: #16603E; font-weight: 700;">0% (Verified)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                    <span style="color: #817889; font-weight: 600;">Queue Status</span>
+                    <span style="background-color: #FEF6EB; color: #8A5310; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid #F8D8A7; white-space: nowrap;">250 Pending</span>
+                </div>
             </div>
         </div>
         """,
@@ -210,7 +250,7 @@ if data_loaded:
     # =========================================================================
     # SECTION 1: EXECUTIVE OVERVIEW
     # =========================================================================
-    if mode == "1. Executive Overview":
+    def render_executive_overview():
         st.markdown(
             """
             <div class="brand-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
@@ -219,7 +259,7 @@ if data_loaded:
                     <p class="brand-desc">Executive health monitoring, ticket volume trends, SLA compliance, and intake queue risk distribution.</p>
                 </div>
                 <div>
-                    <span style="font-size: 0.8rem; color: #64748B;">Live Queue: <b>June 29 - June 30, 2026</b></span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #4A4252;">Live Queue: <b>June 29 - June 30, 2026</b></span>
                 </div>
             </div>
             """,
@@ -325,10 +365,10 @@ if data_loaded:
                 """
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <div>
-                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">
+                        <h4 style="font-size: 1.25rem; font-weight: 800; color: #120A18; margin: 0;">
                             High-Risk Open Intake Tickets (Immediate Escalation Queue)
                         </h4>
-                        <p style="font-size: 0.825rem; color: #64748B; margin: 2px 0 0 0;">
+                        <p style="font-size: 0.9rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">
                             Pre-assignment breach risk estimated ≥ 70%. Real intake tickets awaiting routing dispatch.
                         </p>
                     </div>
@@ -382,20 +422,37 @@ if data_loaded:
     # =========================================================================
     # SECTION 2: SLA RISK PREDICTOR (PRE-ASSIGNMENT)
     # =========================================================================
-    elif mode == "2. SLA Risk Predictor (Pre-Assignment)":
+    def render_sla_risk_predictor():
+        meta = sla_model.metadata
         st.markdown(
-            """
+            f"""
             <div class="brand-header">
                 <h2 class="brand-title">SLA Resolution Breach Risk Predictor</h2>
-                <p class="brand-desc">Trained strictly on 1,807 historical completed tickets using 18 pre-assignment features. Evaluated on 362 unseen holdout test tickets. Zero target leakage.</p>
+                <p class="brand-desc">Trained on {meta.get('train_samples', 0):,} completed tickets using 18 pre-assignment features. Evaluated on {meta.get('test_samples', 0):,} held-out tickets. Open tickets and post-resolution features are excluded from training.</p>
             </div>
             """,
             unsafe_allow_html=True,
         )
 
-        meta = sla_model.metadata
         holdout = meta.get("holdout_results", {})
-        cal_eval = holdout.get("calibrated_selected_model", holdout.get("random_forest", {}))
+        cal_eval = holdout.get("selected_model", holdout.get("calibrated_selected_model", holdout.get("random_forest", {})))
+        cm_counts = cal_eval.get("confusion_matrix", {})
+        accuracy = cal_eval.get("accuracy", (cm_counts.get("tn", 0) + cm_counts.get("tp", 0)) / max(sum(cm_counts.values()), 1))
+        accuracy_cols = st.columns(3)
+        accuracy_cols[0].metric("Holdout accuracy", f"{accuracy:.2%}")
+        external_comparison = meta.get("external_evaluation_results", {})
+        external_metrics = external_comparison.get("evaluation_tickets", {}).get("candidate", {})
+        if not external_metrics:
+            audit_path = ROOT_DIR / "docs" / "model_accuracy_results.json"
+            if audit_path.exists():
+                audit = json.loads(audit_path.read_text(encoding="utf-8"))
+                artifact_hash = hashlib.sha256(SLARiskModel.DEFAULT_MODEL_PATH.read_bytes()).hexdigest()
+                if audit.get("model_sha256") == artifact_hash:
+                    external_metrics = audit.get("results", {}).get("evaluation_tickets", {})
+        if external_metrics:
+            accuracy_cols[1].metric("Separate evaluation accuracy", f"{external_metrics['accuracy']:.2%}")
+        accuracy_cols[2].metric("Classification threshold", f"{sla_model.decision_threshold:.1%}")
+        st.caption(f"Active model: {active_model_name}. All available evaluation data is synthetic; real-world accuracy needs separate validation.")
         roc_val = cal_eval.get("roc_auc", 0.0)
         pr_val = cal_eval.get("pr_auc", 0.0)
         f1_val = cal_eval.get("f1", 0.0)
@@ -432,7 +489,7 @@ if data_loaded:
             )
         with m6:
             st.markdown(
-                render_kpi_card("Brier Score", f"{brier_val:.4f}", "Calibrated (Sigmoid)", f"{brier_val:.4f}", "green"),
+                render_kpi_card("Brier Score", f"{brier_val:.4f}", "Probability error; lower is better", f"{brier_val:.4f}", "green"),
                 unsafe_allow_html=True,
             )
 
@@ -441,13 +498,29 @@ if data_loaded:
         tab_eval, tab_triage = st.tabs(["📊 Model Evaluation & Benchmarks", "⚡ Live Open Queue Triage (250 Tickets)"])
 
         with tab_eval:
+            if external_comparison:
+                st.markdown("#### Accuracy before and after")
+                comparison_rows = []
+                for dataset, values in external_comparison.items():
+                    before, after = values["baseline"], values["candidate"]
+                    comparison_rows.append({
+                        "Dataset": dataset.replace("_", " ").title(),
+                        "Tickets": after["samples"],
+                        "Previous accuracy": f"{before['accuracy']:.2%}",
+                        "Current accuracy": f"{after['accuracy']:.2%}",
+                        "Change (percentage points)": round(100*(after["accuracy"]-before["accuracy"]), 2),
+                        "Missed breaches": after["confusion_matrix"]["fn"],
+                        "False alarms": after["confusion_matrix"]["fp"],
+                    })
+                st.dataframe(pd.DataFrame(comparison_rows), width="stretch", hide_index=True)
+                st.caption("Model and threshold selected using training cross-validation. The fixed evaluation datasets were used for assessment and the deployment gate.")
             # Benchmark Comparison Card (Light-Themed Table)
             with st.container(border=True):
                 st.markdown(
                     """
                     <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Cross-Validation & Holdout Benchmark Comparison</h4>
-                        <p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">Candidate models trained with Stratified 5-Fold Cross Validation and tested on 362 unseen holdout historical tickets.</p>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: #120A18; margin: 0;">Cross-Validation & Holdout Benchmark Comparison</h4>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Candidate models trained with Stratified 5-Fold Cross Validation and tested on 362 unseen holdout historical tickets.</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -460,12 +533,17 @@ if data_loaded:
                     ("Random Forest (Uncalibrated)", holdout.get("random_forest", {}), meta.get("cv_benchmarks", {}).get("random_forest", {})),
                     ("Random Forest (Calibrated Sigmoid)", holdout.get("calibrated_selected_model", {}), meta.get("cv_benchmarks", {}).get("random_forest", {})),
                 ]
+                if "selected_model" in holdout:
+                    selected_cv = meta.get("selection_cv_results", {}).get(meta.get("selected_model"), {})
+                    models_to_show.append((active_model_name, holdout["selected_model"], {
+                        "cv_roc_auc_mean": selected_cv.get("cv_roc_auc", 0),
+                    }))
 
                 for label, h_m, cv_m in models_to_show:
                     if h_m:
                         bench_data.append({
                             "Model Architecture": label,
-                            "5-Fold CV ROC-AUC": f"{cv_m.get('cv_roc_auc_mean', 0):.4f} (±{cv_m.get('cv_roc_auc_std', 0):.3f})" if cv_m else "N/A",
+                            "5-Fold CV ROC-AUC": (f"{cv_m.get('cv_roc_auc_mean', 0):.4f} (±{cv_m['cv_roc_auc_std']:.3f})" if "cv_roc_auc_std" in cv_m else f"{cv_m.get('cv_roc_auc_mean', 0):.4f} (OOF)") if cv_m else "N/A",
                             "Holdout ROC-AUC": f"{h_m.get('roc_auc', 0):.4f}",
                             "Holdout PR-AUC": f"{h_m.get('pr_auc', 0):.4f}",
                             "Holdout F1": f"{h_m.get('f1', 0):.4f}",
@@ -488,6 +566,9 @@ if data_loaded:
                     top_feats = meta.get("top_feature_importances", [])
                     if top_feats:
                         fig_feat = create_feature_importance_chart(top_feats)
+                        if meta.get("feature_importance_method"):
+                            fig_feat.update_xaxes(title="Relative permutation importance")
+                            st.caption(meta["feature_importance_method"])
                         st.plotly_chart(fig_feat, use_container_width=True, config=CHART_CONFIG)
 
             with st.expander("ℹ️ Dataset Limitations & Split Strategy Rationale"):
@@ -498,8 +579,8 @@ if data_loaded:
             st.markdown(
                 """
                 <div style="margin-bottom: 14px;">
-                    <h3 style="font-size: 1.15rem; font-weight: 700; color: #0F172A; margin: 0;">Live Triage Scoring on 250 Open Queue Tickets</h3>
-                    <p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">Scored in real-time at ticket arrival using pre-assignment features before agent allocation.</p>
+                    <h3 style="font-size: 1.35rem; font-weight: 800; color: #120A18; margin: 0;">Live Triage Scoring on 250 Open Queue Tickets</h3>
+                    <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Scored in real-time at ticket arrival using pre-assignment features before agent allocation.</p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -537,8 +618,8 @@ if data_loaded:
                 st.markdown(
                     """
                     <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Filterable Open Queue Triage Table</h4>
-                        <p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">Filter by estimated risk tier and priority level.</p>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: #120A18; margin: 0;">Filterable Open Queue Triage Table</h4>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Filter by estimated risk tier and priority level.</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -550,12 +631,14 @@ if data_loaded:
                         "Filter by Risk Tier",
                         ["🔴 High (>=70%)", "🟡 Medium (40-70%)", "🟢 Low (<40%)"],
                         default=["🔴 High (>=70%)", "🟡 Medium (40-70%)", "🟢 Low (<40%)"],
+                        key="sla_filter_risk_tier",
                     )
                 with col_f2:
                     selected_priority = st.multiselect(
                         "Filter by Priority",
                         ["P1", "P2", "P3", "P4"],
                         default=["P1", "P2", "P3", "P4"],
+                        key="sla_filter_priority",
                     )
 
                 filtered_triage = triage_df[
@@ -591,7 +674,7 @@ if data_loaded:
     # =========================================================================
     # SECTION 3: OPERATIONAL BOTTLENECKS
     # =========================================================================
-    elif mode == "3. Operational Bottlenecks":
+    def render_operational_bottlenecks():
         st.markdown(
             """
             <div class="brand-header">
@@ -606,8 +689,8 @@ if data_loaded:
         open_high_risk = int((triage_df["breach_risk"] >= 0.70).sum())
         st.markdown(
             f"""
-            <div style="background-color: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 0.825rem; color: #1E3A8A;">
+            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.9rem; font-weight: 600; color: #120A18;">
                     <b>⚡ Live Queue Notice:</b> {len(open_tickets):,} incoming tickets awaiting dispatch ({open_high_risk} high-risk &ge; 70%) are <b>strictly excluded</b> from historical outcome rates below to maintain analytical integrity.
                 </div>
                 <span class="kpi-badge-blue">250 Open Backlog</span>
@@ -621,8 +704,8 @@ if data_loaded:
             st.markdown(
                 """
                 <div style="margin-bottom: 8px;">
-                    <span style="font-size: 0.8rem; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em;">Interactive Diagnostic Filters</span>
-                    <p style="font-size: 0.785rem; color: #64748B; margin: 2px 0 0 0;">Filter historical completed tickets by domain, priority tier, and merchant sector.</p>
+                    <span style="font-size: 0.875rem; font-weight: 600; font-weight: 700; color: #120A18; text-transform: uppercase; letter-spacing: 0.04em;">Interactive Diagnostic Filters</span>
+                    <p style="font-size: 0.85rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Filter historical completed tickets by domain, priority tier, and merchant sector.</p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -630,13 +713,13 @@ if data_loaded:
             fc1, fc2, fc3 = st.columns(3)
             with fc1:
                 all_cats = sorted(hist_tickets["category"].unique())
-                selected_cats = st.multiselect("Filter by Domain Category", all_cats, default=all_cats)
+                selected_cats = st.multiselect("Filter by Domain Category", all_cats, default=all_cats, key="bn_filter_cats")
             with fc2:
                 all_prios = ["P1", "P2", "P3", "P4"]
-                selected_prios = st.multiselect("Filter by Priority", all_prios, default=all_prios)
+                selected_prios = st.multiselect("Filter by Priority", all_prios, default=all_prios, key="bn_filter_prios")
             with fc3:
                 all_sectors = sorted(merchants["sector"].unique())
-                selected_sectors = st.multiselect("Filter by Merchant Sector", all_sectors, default=all_sectors)
+                selected_sectors = st.multiselect("Filter by Merchant Sector", all_sectors, default=all_sectors, key="bn_filter_sectors")
 
         # Filter the historical dataframe
         filtered_hist = hist_tickets[
@@ -726,8 +809,8 @@ if data_loaded:
                         st.markdown(
                             """
                             <div style="margin-bottom: 8px;">
-                                <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0;">Ranked Bottlenecks by Excess Breach Impact</h4>
-                                <p style="font-size: 0.775rem; color: #64748B; margin: 2px 0 0 0;">Formula: <code>Excess Breaches × [N / (N + 10)]</code>. Penalizes small sample noise.</p>
+                                <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0;">Ranked Bottlenecks by Excess Breach Impact</h4>
+                                <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Formula: <code>Excess Breaches × [N / (N + 10)]</code>. Penalizes small sample noise.</p>
                             </div>
                             """,
                             unsafe_allow_html=True,
@@ -774,7 +857,7 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Subcategory Bottleneck Details & Operational Recommendations</h4>
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Subcategory Bottleneck Details & Operational Recommendations</h4>
                         """,
                         unsafe_allow_html=True,
                     )
@@ -827,7 +910,7 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Domain Category Outcome & Rework Summary</h4>
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Domain Category Outcome & Rework Summary</h4>
                         """,
                         unsafe_allow_html=True,
                     )
@@ -887,8 +970,8 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Specialist Workload, Breach Rate & Domain Mismatch Roster</h4>
-                        <p style="font-size: 0.775rem; color: #64748B; margin: 0 0 10px 0;">Individual agent performance across historical ticket assignments (with sample sizes N).</p>
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Specialist Workload, Breach Rate & Domain Mismatch Roster</h4>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 0 0 10px 0;">Individual agent performance across historical ticket assignments (with sample sizes N).</p>
                         """,
                         unsafe_allow_html=True,
                     )
@@ -924,8 +1007,8 @@ if data_loaded:
                 st.markdown(
                     """
                     <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Evidence-Based Leadership Insights & Operational Recommendations</h4>
-                        <p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">Rigorous empirical findings grounded strictly in completed ticket data. Observational associations are stated with explicit caveats.</p>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: #120A18; margin: 0;">Evidence-Based Leadership Insights & Operational Recommendations</h4>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Rigorous empirical findings grounded strictly in completed ticket data. Observational associations are stated with explicit caveats.</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -938,7 +1021,7 @@ if data_loaded:
     # =========================================================================
     # SECTION 4: SMART AGENT RECOMMENDATION
     # =========================================================================
-    elif mode == "4. Smart Agent Recommendation":
+    def render_smart_agent_recommendation():
         st.markdown(
             """
             <div class="brand-header">
@@ -952,8 +1035,8 @@ if data_loaded:
         # Informational Notice: Respecting real data constraints
         st.markdown(
             """
-            <div style="background-color: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 0.825rem; color: #1E3A8A;">
+            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.9rem; font-weight: 600; color: #120A18;">
                     <b>🛡️ Transparent Routing Policy:</b> Recommendations are grounded in <b>intake-time attributes</b> (domain, priority, merchant region) and static agent directories. Real-time queue concurrency is unobserved in the data and is not assumed.
                 </div>
                 <span class="kpi-badge-blue">Day 4 Engine Active</span>
@@ -1028,8 +1111,8 @@ if data_loaded:
                 st.markdown(
                     """
                     <div style="margin-bottom: 8px;">
-                        <span style="font-size: 0.8rem; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em;">Open Queue Ticket Selector</span>
-                        <p style="font-size: 0.785rem; color: #64748B; margin: 2px 0 0 0;">Filter unassigned open tickets by category and priority to inspect individual agent recommendations.</p>
+                        <span style="font-size: 0.875rem; font-weight: 600; font-weight: 700; color: #120A18; text-transform: uppercase; letter-spacing: 0.04em;">Open Queue Ticket Selector</span>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Filter unassigned open tickets by category and priority to inspect individual agent recommendations.</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -1081,8 +1164,8 @@ if data_loaded:
                     with st.container(border=True):
                         st.markdown(
                             f"""
-                            <div style="font-size: 0.8rem; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">Intake Ticket Diagnostics</div>
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.8rem;">
+                            <div style="font-size: 0.875rem; font-weight: 600; font-weight: 700; color: #120A18; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">Intake Ticket Diagnostics</div>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.875rem; font-weight: 600;">
                                 <div><b>Ticket ID:</b> #{selected_ticket.get('ticket_id')}</div>
                                 <div><b>Priority SLA:</b> {selected_ticket.get('priority')} ({selected_ticket.get('sla_target_hours', '24h')} target)</div>
                                 <div><b>Domain Category:</b> {selected_ticket.get('category')}</div>
@@ -1100,8 +1183,8 @@ if data_loaded:
                     with st.container(border=True):
                         st.markdown(
                             """
-                            <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Alternative Eligible Candidates & Backups</h4>
-                            <p style="font-size: 0.775rem; color: #64748B; margin: 0 0 10px 0;">Ranked alternative specialists within the category domain.</p>
+                            <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Alternative Eligible Candidates & Backups</h4>
+                            <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 0 0 10px 0;">Ranked alternative specialists within the category domain.</p>
                             """,
                             unsafe_allow_html=True,
                         )
@@ -1135,8 +1218,8 @@ if data_loaded:
                     with st.container(border=True):
                         st.markdown(
                             """
-                            <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 6px 0;">🧪 Policy Sandbox & Edge-Case Validator</h4>
-                            <p style="font-size: 0.775rem; color: #64748B; margin: 0 0 10px 0;">Test how the recommendation engine responds to anomalous intake scenarios.</p>
+                            <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 6px 0;">🧪 Policy Sandbox & Edge-Case Validator</h4>
+                            <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 0 0 10px 0;">Test how the recommendation engine responds to anomalous intake scenarios.</p>
                             """,
                             unsafe_allow_html=True,
                         )
@@ -1176,8 +1259,8 @@ if data_loaded:
                 st.markdown(
                     """
                     <div style="margin-bottom: 8px;">
-                        <span style="font-size: 0.8rem; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em;">Batch Dispatch Strategy Controls</span>
-                        <p style="font-size: 0.785rem; color: #64748B; margin: 2px 0 0 0;">Route all 250 open queue tickets concurrently using configurable allocation strategies.</p>
+                        <span style="font-size: 0.875rem; font-weight: 600; font-weight: 700; color: #120A18; text-transform: uppercase; letter-spacing: 0.04em;">Batch Dispatch Strategy Controls</span>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Route all 250 open queue tickets concurrently using configurable allocation strategies.</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -1193,7 +1276,7 @@ if data_loaded:
                 with strat_col2:
                     st.markdown(
                         f"""
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 14px; font-size: 0.785rem; color: #475569;">
+                        <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; font-weight: 600; color: #4A4252;">
                             <b>Active Strategy:</b> {'Greedy best-fit prioritizes maximum alignment score for each individual ticket regardless of queue concentration.' if batch_strategy == 'top_match' else 'Load-balanced distributes tickets evenly across eligible category specialists while preserving strict category alignment.'}
                         </div>
                         """,
@@ -1226,8 +1309,8 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Tier Allocation Breakdown</h4>
-                        <p style="font-size: 0.775rem; color: #64748B; margin: 0 0 10px 0;">Distribution of open queue ticket recommendations across specialist tiers.</p>
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Tier Allocation Breakdown</h4>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 0 0 10px 0;">Distribution of open queue ticket recommendations across specialist tiers.</p>
                         """,
                         unsafe_allow_html=True,
                     )
@@ -1240,7 +1323,7 @@ if data_loaded:
 
                     st.markdown(
                         """
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px; font-size: 0.76rem; color: #64748B; margin-top: 10px;">
+                        <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 6px; padding: 10px; font-size: 0.76rem; color: #4A4252; margin-top: 10px;">
                             <b>Observational Notice:</b> Batch allocation balancing operates strictly on the 250 open queue tickets. Existing historical backlog and external shifts are unobserved.
                         </div>
                         """,
@@ -1251,7 +1334,7 @@ if data_loaded:
             with st.container(border=True):
                 st.markdown(
                     """
-                    <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Open Queue Ticket Dispatch Manifest (250 Tickets)</h4>
+                    <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">Open Queue Ticket Dispatch Manifest (250 Tickets)</h4>
                     """,
                     unsafe_allow_html=True,
                 )
@@ -1292,8 +1375,8 @@ if data_loaded:
                     """
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <div>
-                            <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0;">Support Specialist Pool Roster (20 Agents)</h4>
-                            <p style="font-size: 0.775rem; color: #64748B; margin: 2px 0 0 0;">Specialist domain, tier capability, working shift, velocity rating, and historical metrics.</p>
+                            <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0;">Support Specialist Pool Roster (20 Agents)</h4>
+                            <p style="font-size: 0.875rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">Specialist domain, tier capability, working shift, velocity rating, and historical metrics.</p>
                         </div>
                         <span class="kpi-badge-blue">20 Active Specialists</span>
                     </div>
@@ -1331,23 +1414,23 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 10px 0;">Multi-Criteria Scoring Weights & Policy Rules</h4>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.8rem;">
-                            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;">
-                                <div style="font-weight: 700; color: #0F172A;">1. Domain Specialty (50% Weight)</div>
-                                <div style="color: #64748B; margin-top: 4px;">Primary category alignment constraint. Eliminates the +24.9 pp resolution breach penalty established in Day 3.</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 10px 0;">Multi-Criteria Scoring Weights & Policy Rules</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.875rem; font-weight: 600;">
+                            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #120A18;">1. Domain Specialty (50% Weight)</div>
+                                <div style="color: #4A4252; margin-top: 4px;">Primary category alignment constraint. Eliminates the +24.9 pp resolution breach penalty established in Day 3.</div>
                             </div>
-                            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;">
-                                <div style="font-weight: 700; color: #0F172A;">2. Priority-to-Tier Fit (25% Weight)</div>
-                                <div style="color: #64748B; margin-top: 4px;">P1 & P2 high-impact tickets routed preferentially to L2/L3 specialists; P4 routed to L1 agents.</div>
+                            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #120A18;">2. Priority-to-Tier Fit (25% Weight)</div>
+                                <div style="color: #4A4252; margin-top: 4px;">P1 & P2 high-impact tickets routed preferentially to L2/L3 specialists; P4 routed to L1 agents.</div>
                             </div>
-                            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;">
-                                <div style="font-weight: 700; color: #0F172A;">3. Velocity Multiplier (15% Weight)</div>
-                                <div style="color: #64748B; margin-top: 4px;">Continuous agent efficiency rating from directory metadata (0.692x to 1.355x scale).</div>
+                            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #120A18;">3. Velocity Multiplier (15% Weight)</div>
+                                <div style="color: #4A4252; margin-top: 4px;">Continuous agent efficiency rating from directory metadata (0.692x to 1.355x scale).</div>
                             </div>
-                            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;">
-                                <div style="font-weight: 700; color: #0F172A;">4. Shift Alignment (10% Weight)</div>
-                                <div style="color: #64748B; margin-top: 4px;">Synchronous working window match between specialist region and merchant location.</div>
+                            <div style="background-color: #F8F7FB; border: 1px solid #E5DFE9; border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #120A18;">4. Shift Alignment (10% Weight)</div>
+                                <div style="color: #4A4252; margin-top: 4px;">Synchronous working window match between specialist region and merchant location.</div>
                             </div>
                         </div>
                         """,
@@ -1357,8 +1440,8 @@ if data_loaded:
                 with st.container(border=True):
                     st.markdown(
                         """
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 10px 0;">Operational Caveats & Data Contracts</h4>
-                        <div style="font-size: 0.8rem; color: #475569; line-height: 1.5;">
+                        <h4 style="font-size: 1.1rem; font-weight: 800; color: #120A18; margin: 0 0 10px 0;">Operational Caveats & Data Contracts</h4>
+                        <div style="font-size: 0.875rem; font-weight: 600; color: #4A4252; line-height: 1.5;">
                             <p style="margin: 0 0 8px 0;"><b>Non-Probabilistic Score:</b> Match scores represent structured multi-attribute compatibility indices, not calibrated probabilities of ticket success.</p>
                             <p style="margin: 0 0 8px 0;"><b>Unobserved Live State:</b> Real-time queue concurrency, active ticket backlog, and agent shift attendance are not recorded in the dataset and are not fabricated.</p>
                             <p style="margin: 0;"><b>Historical Context:</b> Specialist historical breach rates reflect organizational assignment patterns rather than innate capability alone.</p>
@@ -1371,7 +1454,7 @@ if data_loaded:
     # =========================================================================
     # SECTION 5: WHAT-IF IMPACT SIMULATOR
     # =========================================================================
-    elif mode == "5. What-If Impact Simulator":
+    def render_what_if_simulator():
         st.markdown(
             """
             <div class="brand-header">
@@ -1387,10 +1470,10 @@ if data_loaded:
         st.markdown(
             """
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">1. Observed Historical Ground Truth</h4>
-                <span style="font-size: 0.775rem; color: #64748B; font-weight: 600;">Sample: 1,807 Completed Tickets (Excludes 250 Open Queue)</span>
+                <h4 style="font-size: 1.25rem; font-weight: 800; color: #120A18; margin: 0;">1. Observed Historical Ground Truth</h4>
+                <span style="font-size: 0.875rem; font-weight: 600; color: #4A4252; font-weight: 600;">Sample: 1,807 Completed Tickets (Excludes 250 Open Queue)</span>
             </div>
-            <p style="font-size: 0.825rem; color: #475569; margin-top: 0; margin-bottom: 12px;">
+            <p style="font-size: 0.9rem; font-weight: 600; color: #4A4252; margin-top: 0; margin-bottom: 12px;">
                 Empirical baseline calculated strictly from completed historical tickets. Quantifies the observed resolution drag caused by category mismatching and establishes the maximum theoretical recovery ceiling if cross-domain mismatching were completely eliminated.
             </p>
             """,
@@ -1449,10 +1532,10 @@ if data_loaded:
             st.markdown(
                 """
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">2. Counterfactual Policy & Staffing Scenario Generator</h4>
-                    <span style="font-size: 0.775rem; color: #2563EB; font-weight: 600;">Interactive Sensitivity Controls</span>
+                    <h4 style="font-size: 1.25rem; font-weight: 800; color: #120A18; margin: 0;">2. Counterfactual Policy & Staffing Scenario Generator</h4>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #120A18; font-weight: 600;">Interactive Sensitivity Controls</span>
                 </div>
-                <p style="font-size: 0.825rem; color: #475569; margin-top: 0; margin-bottom: 14px;">
+                <p style="font-size: 0.9rem; font-weight: 600; color: #4A4252; margin-top: 0; margin-bottom: 14px;">
                     Adjust policy targets to simulate realigned ticket volumes, SLA breach drops, and recovered labor capacity. Model domain specialists as capacity enablers (~90 tickets/specialist) to absorb historical category mismatches.
                 </p>
                 """,
@@ -1534,7 +1617,7 @@ if data_loaded:
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
             st.markdown(
                 f"""
-                <div style="font-size: 0.85rem; font-weight: 700; color: #1E293B; margin-bottom: 8px;">
+                <div style="font-size: 0.95rem; font-weight: 800; color: #1A1322; margin-bottom: 8px;">
                     Simulated Scenario Outputs (Target Mismatch: {target_mismatch:.1f}% | Headcount: +{added_specialists})
                 </div>
                 """,
@@ -1594,10 +1677,10 @@ if data_loaded:
         st.markdown(
             """
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">3. Side-by-Side Baseline vs. Scenario Audit</h4>
-                <span style="font-size: 0.775rem; color: #64748B; font-weight: 600;">Rigorous Traceability Matrix</span>
+                <h4 style="font-size: 1.25rem; font-weight: 800; color: #120A18; margin: 0;">3. Side-by-Side Baseline vs. Scenario Audit</h4>
+                <span style="font-size: 0.875rem; font-weight: 600; color: #4A4252; font-weight: 600;">Rigorous Traceability Matrix</span>
             </div>
-            <p style="font-size: 0.825rem; color: #475569; margin-top: 0; margin-bottom: 12px;">
+            <p style="font-size: 0.9rem; font-weight: 600; color: #4A4252; margin-top: 0; margin-bottom: 12px;">
                 Direct empirical comparison of observed baseline ground truth against counterfactual simulation outputs.
             </p>
             """,
@@ -1613,7 +1696,7 @@ if data_loaded:
             with st.container(border=True):
                 st.markdown(
                     """
-                    <h5 style="font-size: 0.925rem; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">
+                    <h5 style="font-size: 1.05rem; font-weight: 800; color: #120A18; margin: 0 0 8px 0;">
                         Domain Specialist Capacity Absorption Breakdown
                     </h5>
                     """,
@@ -1713,3 +1796,88 @@ if data_loaded:
                 - Counterfactual estimates represent upper-bound operational potential under standard *ceteris paribus* (all else equal) assumptions.
                 """,
             )
+
+    # Navigation scroll-to-top logic: reset scroll position ONLY when navigation destination changes
+    prev_nav_mode = st.session_state.get("_last_nav_mode")
+    if prev_nav_mode is not None and prev_nav_mode != mode:
+        st.html(
+            """
+            <script>
+            (function() {
+                const scrollToTop = () => {
+                    try {
+                        window.scrollTo(0, 0);
+                        if (window.parent && window.parent !== window) {
+                            window.parent.scrollTo(0, 0);
+                        }
+                    } catch(e) {}
+                    try {
+                        const targets = [
+                            document.querySelector('section[data-testid="stMain"]'),
+                            document.querySelector('.main'),
+                            document.querySelector('[data-testid="stAppViewContainer"]'),
+                            window.parent.document.querySelector('section[data-testid="stMain"]'),
+                            window.parent.document.querySelector('.main'),
+                            window.parent.document.querySelector('[data-testid="stAppViewContainer"]')
+                        ];
+                        for (const t of targets) {
+                            if (t && t.scrollTop > 0) t.scrollTop = 0;
+                        }
+                    } catch(e) {}
+                };
+                scrollToTop();
+                requestAnimationFrame(scrollToTop);
+                setTimeout(scrollToTop, 60);
+            })();
+            </script>
+            """
+        )
+    st.session_state["_last_nav_mode"] = mode
+
+    # Main Content Router
+    assignment_model = get_assignment_model(AssignmentRiskModel.PATH.stat().st_mtime_ns) if AssignmentRiskModel.PATH.exists() else None
+
+    if mode in ("My Workspace", "Agent Workspace"):
+        render_my_workspace(
+            queue_df=agent_queue_df,
+            agents=agents,
+            merchants=merchants,
+            sla_model=sla_model,
+            agent_recommender=agent_recommender,
+            bottleneck_detector=bottleneck_detector,
+            assignment_model=assignment_model,
+        )
+    elif mode == "My Tickets":
+        render_my_tickets(
+            queue_df=agent_queue_df,
+            agents=agents,
+            merchants=merchants,
+            agent_recommender=agent_recommender,
+        )
+    elif mode in ("Supervisor View", "Supervisor Workspace"):
+        render_supervisor_workspace(
+            tickets=tickets,
+            hist_tickets=hist_tickets,
+            open_tickets=open_tickets,
+            agents=agents,
+            merchants=merchants,
+            triage_df=triage_df,
+            risk_scores=risk_scores,
+            sla_model=sla_model,
+            assignment_model=assignment_model,
+            bottleneck_detector=bottleneck_detector,
+            agent_recommender=agent_recommender,
+            impact_simulator=impact_simulator,
+            render_overview_func=render_executive_overview,
+            render_sla_risk_func=render_sla_risk_predictor,
+            render_bottlenecks_func=render_operational_bottlenecks,
+            render_dispatch_func=render_smart_agent_recommendation,
+            render_sim_func=render_what_if_simulator,
+            render_decision_engine_func=lambda: render_decision_engine(open_tickets, risk_scores, agents, merchants, sla_model, assignment_model) if assignment_model is not None else st.info("The assignment model has not been trained yet."),
+            render_workload_func=lambda: render_workload(tickets),
+        )
+    elif mode == "Agent Profile":
+        render_agent_profile(
+            agents=agents,
+            queue_df=agent_queue_df,
+        )

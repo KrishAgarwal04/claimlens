@@ -25,6 +25,7 @@ wheels/
 
 # Jupyter Notebooks
 .ipynb_checkpoints
+.pytest_cache/
 
 # Environment variables
 .env
@@ -36,6 +37,7 @@ wheels/
 
 # Streamlit
 .streamlit/
+!.streamlit/config.toml
 
 # OS artifacts
 Thumbs.db
@@ -47,5 +49,10 @@ $RECYCLE.BIN/
 # Temporary outputs
 models/*.joblib
 !models/sla_risk_model.joblib
+!models/assignment_risk_model.joblib
 models/*.pkl
 inspection_summary.json
+.model_experiments/
+models/baseline/*
+!models/baseline/assignment_risk_high_accuracy.joblib
+!models/baseline/assignment_high_accuracy_metadata.json

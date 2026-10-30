@@ -1,0 +1,190 @@
+{
+  "dataset": "evaluation_tickets_v3.csv",
+  "dataset_sha256": "ea47eb07831c46f8d8247f574265a5bb704a796cd674e2120371f47b3c62994c",
+  "rows": 500,
+  "date_range": [
+    "2026-10-15 00:00:00",
+    "2028-04-07 16:08:43"
+  ],
+  "actual_breaches": 302,
+  "actual_non_breaches": 198,
+  "audit": {
+    "duplicate_ticket_ids": 0,
+    "ticket_ids_matching_training": 0,
+    "ticket_ids_matching_original_history": 0,
+    "ticket_ids_matching_previous_evaluation": 0,
+    "labels_inconsistent_with_recorded_resolution_and_sla": 0,
+    "rows_after_original_historical_period": 500,
+    "unknown_merchant_ids": [],
+    "unknown_agent_ids": [],
+    "rows_excluded": 0
+  },
+  "model_sha256": {
+    "arrival_only": "7003a6366b99abf98a0647b7bf10c8917e0e443eacfec121edd7cd709585afda",
+    "assignment_aware": "942c6d86d923a508672b929b1b2def1fd0013a5db652845a5b17238120a6b157"
+  },
+  "results": {
+    "arrival_only": {
+      "samples": 500,
+      "decision_threshold": 0.5,
+      "accuracy": 0.768,
+      "accuracy_95pct_wilson_interval": [
+        0.7290418422345863,
+        0.8028713622328494
+      ],
+      "precision": 0.7888198757763976,
+      "recall": 0.8410596026490066,
+      "f1": 0.8141025641025641,
+      "roc_auc": 0.8484597631948625,
+      "pr_auc": 0.8908938785526712,
+      "brier_score": 0.15444653711647202,
+      "always_predict_breach_accuracy": 0.604,
+      "confusion_matrix": {
+        "tn": 130,
+        "fp": 68,
+        "fn": 48,
+        "tp": 254
+      },
+      "predicted_breaches": 322
+    },
+    "assignment_aware": {
+      "samples": 500,
+      "decision_threshold": 0.5,
+      "accuracy": 0.86,
+      "accuracy_95pct_wilson_interval": [
+        0.82683247567339,
+        0.8876777989843596
+      ],
+      "precision": 0.889261744966443,
+      "recall": 0.8774834437086093,
+      "f1": 0.8833333333333333,
+      "roc_auc": 0.9302127232590809,
+      "pr_auc": 0.9455285056452003,
+      "brier_score": 0.12066566893301683,
+      "always_predict_breach_accuracy": 0.604,
+      "confusion_matrix": {
+        "tn": 165,
+        "fp": 33,
+        "fn": 37,
+        "tp": 265
+      },
+      "predicted_breaches": 298
+    }
+  },
+  "by_priority": {
+    "arrival_only": {
+      "P1": {
+        "samples": 25,
+        "accuracy": 0.68,
+        "breach_recall": 0.6470588235294118,
+        "confusion_matrix": {
+          "tn": 6,
+          "fp": 2,
+          "fn": 6,
+          "tp": 11
+        }
+      },
+      "P2": {
+        "samples": 105,
+        "accuracy": 0.7714285714285715,
+        "breach_recall": 0.759493670886076,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 5,
+          "fn": 19,
+          "tp": 60
+        }
+      },
+      "P3": {
+        "samples": 225,
+        "accuracy": 0.7688888888888888,
+        "breach_recall": 0.8809523809523809,
+        "confusion_matrix": {
+          "tn": 62,
+          "fp": 37,
+          "fn": 15,
+          "tp": 111
+        }
+      },
+      "P4": {
+        "samples": 145,
+        "accuracy": 0.7793103448275862,
+        "breach_recall": 0.9,
+        "confusion_matrix": {
+          "tn": 41,
+          "fp": 24,
+          "fn": 8,
+          "tp": 72
+        }
+      }
+    },
+    "assignment_aware": {
+      "P1": {
+        "samples": 25,
+        "accuracy": 0.84,
+        "breach_recall": 0.8235294117647058,
+        "confusion_matrix": {
+          "tn": 7,
+          "fp": 1,
+          "fn": 3,
+          "tp": 14
+        }
+      },
+      "P2": {
+        "samples": 105,
+        "accuracy": 0.8666666666666667,
+        "breach_recall": 0.8734177215189873,
+        "confusion_matrix": {
+          "tn": 22,
+          "fp": 4,
+          "fn": 10,
+          "tp": 69
+        }
+      },
+      "P3": {
+        "samples": 225,
+        "accuracy": 0.8755555555555555,
+        "breach_recall": 0.8888888888888888,
+        "confusion_matrix": {
+          "tn": 85,
+          "fp": 14,
+          "fn": 14,
+          "tp": 112
+        }
+      },
+      "P4": {
+        "samples": 145,
+        "accuracy": 0.8344827586206897,
+        "breach_recall": 0.875,
+        "confusion_matrix": {
+          "tn": 51,
+          "fp": 14,
+          "fn": 10,
+          "tp": 70
+        }
+      }
+    }
+  },
+  "protocol": "Frozen saved models and saved thresholds. No fitting, calibration, threshold tuning or row exclusion. Outcome fields used for scoring and label audits only. Agent attributes describe the specified assignment, not arrival-only information.",
+  "directory_assumption": "The repository merchant and agent directory is assumed to apply to this evaluation dataset.",
+  "model_artifacts_unchanged": true,
+  "total_tickets_tested": 500,
+  "actual_breach_count": 302,
+  "actual_non_breach_count": 198,
+  "predicted_breach_count": 298,
+  "predicted_non_breach_count": 202,
+  "accuracy": 0.86,
+  "roc_auc": 0.9302127232590809,
+  "pr_auc": 0.9455285056452003,
+  "breach_precision": 0.889261744966443,
+  "breach_recall": 0.8774834437086093,
+  "breach_f1_score": 0.8833333333333333,
+  "confusion_matrix": {
+    "tn": 165,
+    "fp": 33,
+    "fn": 37,
+    "tp": 265
+  },
+  "primary_model": "assignment_aware",
+  "decision_threshold": 0.5
+}

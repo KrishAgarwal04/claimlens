@@ -346,8 +346,16 @@ class SLARiskModel:
         proba = self.predict_proba(X)
         return proba[:, 1]
 
-    def predict(self, X: pd.DataFrame, threshold: float = 0.5) -> np.ndarray:
-        """Predict binary breach outcome based on classification threshold."""
+    @property
+    def decision_threshold(self) -> float:
+        """Training-selected threshold; legacy artifacts use 0.5."""
+        return float(self.metadata.get("decision_threshold", 0.5))
+
+    def predict(self, X: pd.DataFrame, threshold: Optional[float] = None) -> np.ndarray:
+        """Use the saved operating threshold unless an explicit override is given."""
+        threshold = self.decision_threshold if threshold is None else threshold
+        if not 0.0 <= threshold <= 1.0:
+            raise ValueError("Classification threshold must be between 0 and 1")
         risk = self.predict_risk(X)
         return (risk >= threshold).astype(int)
 

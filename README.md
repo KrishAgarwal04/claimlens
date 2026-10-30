@@ -1,4 +1,32 @@
-# Synthetic ITSM Helpdesk Ticket Dataset
+# OpsPilot AI - Business Operations Intelligence & Decision Engine
+
+The prototype now includes two SLA prediction stages, capacity-constrained dispatch,
+evidence for individual recommendations, workload forecasts, surge detection and
+baseline-versus-proposed scenario comparisons.
+
+| Prediction stage | Original holdout (362 tickets) | Separate evaluation (300 tickets) | V2 evaluation (500 tickets) |
+|---|---:|---:|---:|
+| Arrival only: agent unknown | 80.39% accuracy | 73.67% accuracy | 79.00% accuracy |
+| Compact assignment model: proposed agent known | **85.36% accuracy** | **87.33% accuracy** | **88.80% accuracy** |
+
+The active assignment model is strongly regularized logistic regression (C=0.01),
+selected near 85% training-CV accuracy to satisfy the requested compact profile.
+Its fixed decision threshold is 0.5. This deliberately trades predictive performance
+for a simpler model; it is not an accuracy improvement over the previous full profile.
+The previous stronger artifact is retained under `models/baseline/` and its
+benchmarks are archived in `docs/*_high_accuracy.*`.
+
+The assignment-time model uses 26 intake and proposed-agent attributes. It does
+not use response or resolution outcomes as features. These stages use different
+available information; all datasets are synthetic. See [the evaluation report](EVALUATION_REPORT.md)
+and [the verified assignment metrics](docs/assignment_accuracy_results.json).
+
+Open **AI Decision Engine**, the default dashboard view, to edit per-agent planning
+budgets, review recommended assignments and export the dispatch plan. **Workload
+Forecast** shows a backtest, forecast intervals and unusual intake days. Forecast
+dates follow the dataset snapshot rather than today's date.
+
+## Dataset
 
 A dataset intended to be explored to surface business problems that may be solved in modelling projects or as recommendations in case studies
 
@@ -64,3 +92,55 @@ A ticket routing model is the one currently in progress. Comparing how well tick
 ## Known issues and feedback
 
 This is the first iteration of my first synthetic dataset. I would be grateful for any feedback that identifies problems or suggestions
+
+## Run the OpsPilot AI prototype
+
+From the repository root on Windows:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m streamlit run app/main.py
+```
+
+Evaluate the saved model without retraining:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.models.evaluate
+.\.venv\Scripts\python.exe -m src.models.evaluate_assignment
+.\.venv\Scripts\python.exe -m src.models.evaluate_dataset --dataset evaluation_tickets_v2.csv --name evaluation_v2
+```
+
+Retrain the assignment-time model using training-only cross-validation:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.models.train_assignment --profile compact
+```
+
+The assignment artifact is separate from the arrival-only model. Proposed agent
+attributes are known before work starts; observed mismatch flags and post-response
+or post-resolution outcomes never enter its feature matrix. The planner marks
+already-overdue open tickets using the snapshot deadline, and does not pretend
+that reassignment can undo an existing breach. Agent budgets are explicit planning
+assumptions. Predicted scenario gains need operational confirmation.
+
+For arrival-only model experiments, install the optional training dependencies and run:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-training.txt
+.\.venv\Scripts\python.exe -m src.models.improvement
+.\.venv\Scripts\python.exe -m src.models.refine
+.\.venv\Scripts\python.exe -m src.models.optimize
+```
+
+Selection uses five-fold cross-validation on the original 1,445 training tickets.
+The refinement step compares leading models and support-vector classifiers over
+three repeat splits of the training set.
+The 362-ticket holdout and the separate evaluation datasets do not fit models or
+select thresholds. The promotion command requires better accuracy on both the
+original holdout and the separate 300-ticket evaluation dataset, and retains the
+original artifact under `models/baseline/` locally. Restart Streamlit after promotion.
+
+See `docs/MODEL_IMPROVEMENT.md` and `docs/model_improvement_results.json` for the
+measured comparison, uncertainty and limitations. These are synthetic datasets;
+fresh real operational data is needed to validate deployment performance.

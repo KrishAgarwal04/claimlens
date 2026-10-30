@@ -108,19 +108,20 @@ def test_probability_bounds_and_shapes(dataset_artifacts):
 
 
 def test_model_significantly_outperforms_baseline(dataset_artifacts):
-    """Calibrated Random Forest must decisively beat the majority baseline."""
+    """The active model must beat the majority baseline on discrimination and error."""
     model = SLARiskModel.load()
     meta = model.metadata
     holdout = meta["holdout_results"]
 
     baseline_roc = holdout["majority_baseline"]["roc_auc"]
-    model_roc = holdout["calibrated_selected_model"]["roc_auc"]
+    active = holdout.get("selected_model", holdout["calibrated_selected_model"])
+    model_roc = active["roc_auc"]
     assert baseline_roc == 0.50
     assert model_roc > 0.85, f"Expected ROC-AUC > 0.85, got {model_roc}"
 
     baseline_brier = holdout["majority_baseline"]["brier_score"]
-    model_brier = holdout["calibrated_selected_model"]["brier_score"]
-    assert model_brier < baseline_brier, "Calibrated model must have substantially lower Brier score than baseline"
+    model_brier = active["brier_score"]
+    assert model_brier < baseline_brier, "Active model must have lower Brier score than baseline"
 
 
 def test_model_persistence_and_loading(dataset_artifacts, tmp_path):
@@ -150,3 +151,19 @@ def test_open_queue_inference_completeness(dataset_artifacts):
     assert not np.isnan(risks).any()
     # Check that risks produce varied predictions rather than constant output
     assert np.std(risks) > 0.10, "Risk distribution should reflect ticket priority and category variance"
+
+
+def test_saved_operating_threshold_and_explicit_override(dataset_artifacts, tmp_path):
+    """Reloading an artifact must preserve the training-selected classification rule."""
+    model = SLARiskModel.load()
+    X = dataset_artifacts["X_open"].iloc[:30]
+    risk = model.predict_risk(X)
+    model.metadata["decision_threshold"] = 0.8
+    artifact, metadata = tmp_path / "model.joblib", tmp_path / "metadata.json"
+    model.save(artifact, metadata)
+    reloaded = SLARiskModel.load(artifact, metadata)
+    np.testing.assert_array_equal(reloaded.predict(X), risk >= 0.8)
+    np.testing.assert_array_equal(reloaded.predict(X, threshold=0.3), risk >= 0.3)
+    np.testing.assert_allclose(reloaded.predict_risk(X), risk)
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        reloaded.predict(X, threshold=1.1)

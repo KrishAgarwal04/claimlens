@@ -1,0 +1,5 @@
+# Optional dependencies for cross-validated model selection.
+-r requirements.txt
+catboost==1.2.10
+# These experiments use the SVC/TargetEncoder APIs supported through sklearn 1.10.
+scikit-learn>=1.3,<1.11

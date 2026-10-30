@@ -111,8 +111,9 @@ class TestSavedModelIntegrity:
 
     def test_saved_model_artifact_attributes(self):
         model = SLARiskModel.load()
-        assert model.calibrate is True
-        assert model.model_type == "random_forest"
+        assert model.calibrate == hasattr(model.pipeline, "calibrated_classifiers_")
+        assert model.model_type == model.metadata["selected_model"]
+        assert 0 < model.decision_threshold < 1
         assert model.pipeline is not None
         assert "holdout_results" in model.metadata
         assert "cv_benchmarks" in model.metadata
