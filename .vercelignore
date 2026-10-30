@@ -1,0 +1,14 @@
+.git/
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+.env
+.env.*
+.streamlit/secrets.toml
+tests/
+experiments/
+external_test/
+.model_experiments/
+models/baseline/
