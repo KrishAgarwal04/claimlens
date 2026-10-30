@@ -1,5 +1,10 @@
 # OpsPilot AI - Business Operations Intelligence & Decision Engine
 
+For the current technology stack, architecture, verified model results, demo script,
+limitations, and 70 judges' questions with answers, including detailed Random Forest
+and other algorithm explanations, see the
+[Complete Project and Judges' Preparation Guide](docs/PROJECT_AND_JUDGES_GUIDE.md).
+
 The prototype now includes two SLA prediction stages, capacity-constrained dispatch,
 evidence for individual recommendations, workload forecasts, surge detection and
 baseline-versus-proposed scenario comparisons.

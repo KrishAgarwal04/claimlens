@@ -359,27 +359,51 @@ if data_loaded:
                 fig_sector = create_sector_chart(merchants, tickets)
                 st.plotly_chart(fig_sector, use_container_width=True, config=CHART_CONFIG)
 
-        # Row 4: High-Risk Open Tickets Triage Table
+        # Row 4: All-risk open ticket triage table
         with st.container(border=True):
             st.markdown(
                 """
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <div>
                         <h4 style="font-size: 1.25rem; font-weight: 800; color: #120A18; margin: 0;">
-                            High-Risk Open Intake Tickets (Immediate Escalation Queue)
+                            Open Intake Tickets by Risk and Priority
                         </h4>
                         <p style="font-size: 0.9rem; font-weight: 600; color: #4A4252; margin: 2px 0 0 0;">
-                            Pre-assignment breach risk estimated ≥ 70%. Real intake tickets awaiting routing dispatch.
+                            View all intake tickets or select High, Medium, or Low risk. Filter by priority to focus the queue.
                         </p>
                     </div>
-                    <span class="kpi-badge-red">Urgent Attention</span>
+                    <span class="kpi-badge-blue">All Risk Levels</span>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-            high_risk_df = triage_df[triage_df["breach_risk"] >= 0.70].sort_values("breach_risk", ascending=False)
-            display_high_risk = high_risk_df[[
+            risk_masks = {
+                "All": pd.Series(True, index=triage_df.index),
+                "High": triage_df["breach_risk"] >= 0.70,
+                "Medium": (triage_df["breach_risk"] >= 0.40) & (triage_df["breach_risk"] < 0.70),
+                "Low": triage_df["breach_risk"] < 0.40,
+            }
+            risk_selection = st.radio(
+                "Risk group", list(risk_masks), horizontal=True,
+                format_func=lambda label: f"{label} ({int(risk_masks[label].sum())})",
+                key="overview_risk_group",
+            )
+            priorities = st.multiselect(
+                "Priority", ["P1", "P2", "P3", "P4"],
+                placeholder="All priorities", key="overview_ticket_priorities",
+            )
+            queue_mask = risk_masks[risk_selection].copy()
+            if priorities:
+                queue_mask &= triage_df["priority"].isin(priorities)
+            filtered_queue = triage_df.loc[queue_mask].sort_values("breach_risk", ascending=False)
+            st.caption(
+                f"Showing {len(filtered_queue):,} of {len(triage_df):,} intake tickets. "
+                "High: ≥70% · Medium: 40–<70% · Low: <40%."
+            )
+            if filtered_queue.empty:
+                st.info("No tickets match this risk group and priority. Choose another group or clear the priority filter.")
+            display_queue = filtered_queue[[
                 "ticket_id",
                 "merchant_name",
                 "tier",
@@ -406,9 +430,11 @@ if data_loaded:
             )
 
             st.dataframe(
-                display_high_risk,
-                use_container_width=True,
+                display_queue,
+                width="stretch",
                 hide_index=True,
+                key="overview_intake_table",
+                alt="Open intake tickets filtered by risk group and priority",
                 column_config={
                     "Breach Risk (%)": st.column_config.ProgressColumn(
                         "Breach Risk (%)",

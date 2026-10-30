@@ -18,6 +18,7 @@ from src.config import SLA_TARGETS
 from src.routing.recommender import AgentRecommender
 from src.analytics.bottlenecks import BottleneckDetector
 from app.components import render_kpi_card
+from app.components.ticket_table import render_ticket_triage_table
 
 
 def _compute_ticket_timings(tickets_df: pd.DataFrame) -> pd.DataFrame:
@@ -881,7 +882,12 @@ def render_my_workspace(
         )
 
     # -------------------------------------------------------------------------
-    # 6. TICKET ACTION PANEL (When active ticket is selected)
+    # 6. TICKET CLASSIFICATION TABLE
+    # -------------------------------------------------------------------------
+    render_ticket_triage_table(queue_df)
+
+    # -------------------------------------------------------------------------
+    # 7. TICKET ACTION PANEL (When active ticket is selected)
     # -------------------------------------------------------------------------
     active_tid = st.session_state.get("active_ticket_id")
     if active_tid is not None and len(queue_df[queue_df["ticket_id"] == active_tid]) > 0:
