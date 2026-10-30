@@ -563,7 +563,7 @@ def apply_custom_css():
         }
 
         /* High-Contrast Interactive Buttons: Larger Height & Bold Text */
-        .stButton > button {
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button {
             border-radius: 10px !important;
             font-weight: 700 !important;
             font-size: 0.925rem !important;
@@ -581,46 +581,57 @@ def apply_custom_css():
         }
 
         /* Secondary Buttons: Crisp White with Defined Border & Bold Dark Text */
-        .stButton > button[kind="secondary"],
-        .stButton > button:not([kind="primary"]) {
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button[kind="secondary"],
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button:not([kind="primary"]) {
             background-color: #FFFFFF !important;
-            border: 1.5px solid #D5CBDD !important;
-            color: #1A1322 !important;
+            border: 1.5px solid #2563EB !important;
+            color: #1E40AF !important;
         }
 
-        .stButton > button[kind="secondary"]:hover,
-        .stButton > button:not([kind="primary"]):hover {
-            background-color: #F4EFF8 !important;
-            border-color: #B2A2BF !important;
-            color: #120A18 !important;
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button[kind="secondary"]:hover,
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button:not([kind="primary"]):hover {
+            background-color: #DBEAFE !important;
+            border-color: #1D4ED8 !important;
+            color: #1E3A8A !important;
             box-shadow: 0 2px 4px rgba(30, 20, 40, 0.1) !important;
         }
 
-        /* Primary Buttons: Refined Soft Slate-Plum (#6C5478) with Crisp White Bold Text */
-        .stButton > button[kind="primary"] {
-            background-color: #6C5478 !important;
-            border: 1.5px solid #5A4365 !important;
+        /* Primary buttons: blue with white labels. */
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button[kind="primary"] {
+            background-color: #1D4ED8 !important;
+            border: 1.5px solid #1E40AF !important;
             color: #FFFFFF !important;
             font-weight: 800 !important;
             box-shadow: 0 2px 5px rgba(45, 30, 55, 0.2) !important;
         }
 
-        .stButton > button[kind="primary"]:hover {
-            background-color: #5A4365 !important;
-            border-color: #483352 !important;
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button[kind="primary"]:hover {
+            background-color: #1E40AF !important;
+            border-color: #1E3A8A !important;
             color: #FFFFFF !important;
             box-shadow: 0 3px 7px rgba(45, 30, 55, 0.28) !important;
         }
 
         /* Disabled Buttons: Muted light tint */
-        .stButton > button:disabled,
-        .stButton > button[disabled] {
-            background-color: #F3EFF7 !important;
-            border: 1px solid #E5DFE9 !important;
-            color: #8C8494 !important;
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button:disabled,
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button[disabled] {
+            background-color: #E2E8F0 !important;
+            border: 1px solid #CBD5E1 !important;
+            color: #475569 !important;
             cursor: not-allowed !important;
             box-shadow: none !important;
-            opacity: 0.65 !important;
+            opacity: 1 !important;
+        }
+
+        /* Override global Markdown text colors inside button labels. */
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button :is(p, span, a) {
+            color: inherit !important;
+            font-weight: inherit !important;
+        }
+
+        :is(.stButton, .stDownloadButton, .stFormSubmitButton, .stLinkButton) > button:focus-visible {
+            outline: 3px solid #2563EB !important;
+            outline-offset: 3px !important;
         }
 
         /* Form Inputs & Selectbox Borders: 42px Height & Bold Font */
@@ -1044,6 +1055,10 @@ def apply_custom_css():
             font-size: 0.9rem;
             font-weight: 600;
             line-height: 1.55;
+        }
+
+        .agent-guidance :is(div, span, b) {
+            color: var(--guidance-color) !important;
         }
 
         @media (max-width: 900px) {

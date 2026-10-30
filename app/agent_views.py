@@ -856,19 +856,19 @@ def render_my_workspace(
                 f"🚨 <b>Immediate Recovery Action:</b> Ticket #{urgent_ticket['ticket_id']} ({u_prio}, {u_cat}) has passed its SLA deadline. "
                 f"Expedite resolution workflow immediately."
             )
-            g_bg, g_border, g_color = "#FDF0F1", "#F5BFC3", "#A32832"
+            g_bg, g_border, g_color = "#EFF6FF", "#93C5FD", "#1E40AF"
         elif u_risk >= 70.0:
             guidance_msg = (
                 f"⚡ <b>Priority Action:</b> Ticket #{urgent_ticket['ticket_id']} ({u_prio}, {u_cat}) has a high predicted breach risk ({u_risk:.1f}%). "
                 f"Prioritize resolution to prevent SLA breach."
             )
-            g_bg, g_border, g_color = "#FDF0F1", "#F5BFC3", "#A32832"
+            g_bg, g_border, g_color = "#EFF6FF", "#93C5FD", "#1E40AF"
         else:
             guidance_msg = (
                 f"⏰ <b>Monitor SLA Window:</b> Ticket #{urgent_ticket['ticket_id']} has {u_rem:.1f}h remaining before SLA expiration. "
                 f"Review intake diagnostics and proceed with resolution."
             )
-            g_bg, g_border, g_color = "#FEF6EB", "#F8D8A7", "#8A5310"
+            g_bg, g_border, g_color = "#EFF6FF", "#93C5FD", "#1E40AF"
 
         st.markdown(
             f"""
